@@ -41,6 +41,7 @@ public class LogAsp {
 
     }
 
+
     private String getServiceMethodParams(JoinPoint joinPoint){
         Object[] objects = joinPoint.getArgs();
         Gson gson = new Gson();

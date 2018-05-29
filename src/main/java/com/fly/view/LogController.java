@@ -18,4 +18,5 @@ public class LogController {
         return logMessageService.selectLogMessageById(id);
     }
 
+
 }
