@@ -1,10 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta content="multipart/form-data"/>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-hello-world
+
+<form action="/f/upload" method="post" enctype="multipart/form-data">
+    <input type="file" name="file"><br/>
+    <input type="submit" value="上传">
+</form>
+
 </body>
 </html>
