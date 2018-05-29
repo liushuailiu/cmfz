@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fly.dao.LogMessageMapper">
+  <resultMap id="BaseResultMap" type="com.fly.pojo.LogMessage">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="rules" jdbcType="VARCHAR" property="rules" />
+    <result column="desciption" jdbcType="VARCHAR" property="desciption" />
+    <result column="argus" jdbcType="VARCHAR" property="argus" />
+    <result column="success" jdbcType="VARCHAR" property="success" />
+    <result column="runtime" jdbcType="VARCHAR" property="runtime" />
+    <result column="startTime" jdbcType="DATE" property="starttime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.fly.pojo.LogMessage">
+    <result column="exception" jdbcType="LONGVARCHAR" property="exception" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, username, rules, desciption, argus, success, runtime, startTime
+  </sql>
+  <sql id="Blob_Column_List">
+    exception
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from logmessage
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from logmessage
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.fly.pojo.LogMessage">
+    insert into logmessage (id, username, rules, 
+      desciption, argus, success, 
+      runtime, startTime, exception
+      )
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{rules,jdbcType=VARCHAR}, 
+      #{desciption,jdbcType=VARCHAR}, #{argus,jdbcType=VARCHAR}, #{success,jdbcType=VARCHAR}, 
+      #{runtime,jdbcType=VARCHAR}, #{starttime,jdbcType=DATE}, #{exception,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fly.pojo.LogMessage">
+    insert into logmessage
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="rules != null">
+        rules,
+      </if>
+      <if test="desciption != null">
+        desciption,
+      </if>
+      <if test="argus != null">
+        argus,
+      </if>
+      <if test="success != null">
+        success,
+      </if>
+      <if test="runtime != null">
+        runtime,
+      </if>
+      <if test="starttime != null">
+        startTime,
+      </if>
+      <if test="exception != null">
+        exception,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="rules != null">
+        #{rules,jdbcType=VARCHAR},
+      </if>
+      <if test="desciption != null">
+        #{desciption,jdbcType=VARCHAR},
+      </if>
+      <if test="argus != null">
+        #{argus,jdbcType=VARCHAR},
+      </if>
+      <if test="success != null">
+        #{success,jdbcType=VARCHAR},
+      </if>
+      <if test="runtime != null">
+        #{runtime,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null">
+        #{starttime,jdbcType=DATE},
+      </if>
+      <if test="exception != null">
+        #{exception,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fly.pojo.LogMessage">
+    update logmessage
+    <set>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="rules != null">
+        rules = #{rules,jdbcType=VARCHAR},
+      </if>
+      <if test="desciption != null">
+        desciption = #{desciption,jdbcType=VARCHAR},
+      </if>
+      <if test="argus != null">
+        argus = #{argus,jdbcType=VARCHAR},
+      </if>
+      <if test="success != null">
+        success = #{success,jdbcType=VARCHAR},
+      </if>
+      <if test="runtime != null">
+        runtime = #{runtime,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null">
+        startTime = #{starttime,jdbcType=DATE},
+      </if>
+      <if test="exception != null">
+        exception = #{exception,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.fly.pojo.LogMessage">
+    update logmessage
+    set username = #{username,jdbcType=VARCHAR},
+      rules = #{rules,jdbcType=VARCHAR},
+      desciption = #{desciption,jdbcType=VARCHAR},
+      argus = #{argus,jdbcType=VARCHAR},
+      success = #{success,jdbcType=VARCHAR},
+      runtime = #{runtime,jdbcType=VARCHAR},
+      startTime = #{starttime,jdbcType=DATE},
+      exception = #{exception,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fly.pojo.LogMessage">
+    update logmessage
+    set username = #{username,jdbcType=VARCHAR},
+      rules = #{rules,jdbcType=VARCHAR},
+      desciption = #{desciption,jdbcType=VARCHAR},
+      argus = #{argus,jdbcType=VARCHAR},
+      success = #{success,jdbcType=VARCHAR},
+      runtime = #{runtime,jdbcType=VARCHAR},
+      startTime = #{starttime,jdbcType=DATE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
