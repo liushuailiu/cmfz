@@ -41,6 +41,31 @@
         <property name="dataSource" ref="comboPooledDataSource"/>
     </bean>
 
+    <!--开启文件上传-->
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="1024000000"/>
+        <property name="maxInMemorySize" value="40960"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+    </bean>
+
+    <!--发送邮件-->
+    <bean class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="smtp.qq.com"/>
+        <property name="protocol" value="smtp"/>
+        <property name="port" value="587"/>
+        <property name="username" value="1779905848@qq.com"/>
+        <property name="password" value="Fly@15617976458"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.smtp.timeout">25000</prop>
+            </props>
+        </property>
+    </bean>
+
+
     <aop:config>
         <aop:pointcut id="txPoint" expression="execution(* com.fly.service..*(..))"/>
         <aop:advisor advice-ref="txAdvice" pointcut-ref="txPoint" order="2"/>
