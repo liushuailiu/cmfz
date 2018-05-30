@@ -39,8 +39,7 @@
       <artifactId>spring-context-support</artifactId>
       <version>4.3.14.RELEASE</version>
     </dependency>
-
-
+    <!--JAVA发送邮件依赖的jar包-->
     <!-- https://mvnrepository.com/artifact/javax.mail/mail -->
     <dependency>
       <groupId>javax.mail</groupId>

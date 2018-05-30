@@ -52,15 +52,22 @@
 
     <!--发送邮件-->
     <bean class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <!--邮箱服务器-->
         <property name="host" value="smtp.qq.com"/>
+        <!--发送方式-->
         <property name="protocol" value="smtp"/>
+        <!--发送邮箱使用的端口-->
         <property name="port" value="587"/>
+        <!--发件人邮箱-->
         <property name="username" value="1779905848@qq.com"/>
-        <property name="password" value="Fly@15617976458"/>
+        <!--必须获得QQ邮箱授权码-->
+        <!--umvdkzwsfaopccga-->
+        <property name="password" value="umvdkzwsfaopccga"/>
         <property name="defaultEncoding" value="UTF-8"/>
         <property name="javaMailProperties">
             <props>
                 <prop key="mail.smtp.auth">true</prop>
+                <!--等待时间-->
                 <prop key="mail.smtp.timeout">25000</prop>
             </props>
         </property>

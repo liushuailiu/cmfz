@@ -18,4 +18,5 @@ public interface PermissionMapper {
      * @return
      */
     int batchInsert(List<Permissiontb> permissiontbs);
+
 }

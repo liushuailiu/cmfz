@@ -56,6 +56,7 @@ public class PermissionController {
                     continue;
                 if(permissiontbs.contains(permissionURL))
                     continue;
+
                 Permissiontb permissiontb = new Permissiontb();
 
                 permissiontb.setPermissionValue(permissionURL);
