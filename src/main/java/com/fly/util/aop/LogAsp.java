@@ -26,9 +26,9 @@ public class LogAsp {
     public Object logAround(ProceedingJoinPoint joinPoint) throws ClassNotFoundException {
 
         Object object = null;
-        HttpServletRequest request =
-                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        System.out.println(request.getSession().getAttribute("rules"));
+//        HttpServletRequest request =
+//                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+//        System.out.println(request.getSession().getAttribute("rules"));
         String msg = getServiceMethodDescription(joinPoint);
         String params = getServiceMethodParams(joinPoint);
 
@@ -38,7 +38,6 @@ public class LogAsp {
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
-        System.out.println(msg+">>>>>>>>>>"+params);
          return object;
 
     }

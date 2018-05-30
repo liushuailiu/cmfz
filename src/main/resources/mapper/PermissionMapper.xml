@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fly.dao.PermissionMapper">
+
+    <select id="queryAll" resultType="java.lang.String">
+          SELECT permissionValue FROM permissiontb
+    </select>
+
+    <insert id="batchInsert" parameterType="list">
+
+        INSERT INTO permissiontb(permissionValue,permissionModule,permissionName) VALUES
+
+        <foreach collection="list" item="permission" separator=",">
+            (#{permission.permissionValue},#{permission.permissionModule},#{permission.permissionName})
+        </foreach>
+
+    </insert>
+
+</mapper>

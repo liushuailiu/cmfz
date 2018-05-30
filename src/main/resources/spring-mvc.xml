@@ -19,4 +19,10 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 
+    <!--拦截器配置-->
+
+    <!--<mvc:interceptors>-->
+        <!--<bean class="com.fly.auth.LoginInterceptor"/>-->
+    <!--</mvc:interceptors>-->
+
 </beans>

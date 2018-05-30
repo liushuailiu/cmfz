@@ -1,4 +1,4 @@
-package com.fly.util.auth;
+package com.fly.auth;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator;

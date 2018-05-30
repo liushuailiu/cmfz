@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/log")
+@RequestMapping(value = "/log",name = "日志")
 public class LogController {
 
     @Autowired
     private LogMessageService logMessageService;
 
-    @RequestMapping(value = "/{id}" , method = RequestMethod.PUT)
+    @RequestMapping(value = "/{id}" , method = RequestMethod.PUT,name = "查看权限")
     public LogMessage selectLog(@PathVariable("id") Integer id){
         return logMessageService.selectLogMessageById(id);
     }

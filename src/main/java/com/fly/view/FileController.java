@@ -11,16 +11,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/file")
+@RequestMapping(value = "/file",name = "文件系统")
 public class FileController {
 
     private static final String path = "E:/image/" + FileUtils.getDate() + "/";
 
-    @GetMapping("/{file}/{name}")
+    @GetMapping(value = "/{file}/{name}",name = "下载权限")
     public ResponseEntity<byte[]> download(@PathVariable("file") String fileName, @PathVariable("name") String name) throws IOException {
 
         File file = new File("E:/image/"+fileName+"/"+name+".jpg");
@@ -31,7 +30,7 @@ public class FileController {
                 httpHeaders,HttpStatus.OK);
     }
 
-    @PostMapping(value = "/uploads")
+    @PostMapping(value = "/uploads",name = "上传权限")
     public String uploads(@RequestParam MultipartFile[] files) throws IOException {
         String name = "";
         if(files!=null && files.length>0){

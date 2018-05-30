@@ -41,6 +41,7 @@
         <property name="dataSource" ref="comboPooledDataSource"/>
     </bean>
 
+
     <!--开启文件上传-->
     <bean id="multipartResolver"
           class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
@@ -64,6 +65,17 @@
             </props>
         </property>
     </bean>
+
+    <!--<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">-->
+
+        <!--<property name="exceptionMappings">-->
+            <!--<props>-->
+                <!--<prop key="java.lang.Exception">redirect:/system/error</prop>-->
+                <!--<prop key="com.fly.util.exception.NoPermissionException">redirect:/login/noPermission</prop>-->
+            <!--</props>-->
+        <!--</property>-->
+
+    <!--</bean>-->
 
 
     <aop:config>
