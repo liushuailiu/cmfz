@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fly.dao.SystemUserMapper">
+  <resultMap id="BaseResultMap" type="com.fly.pojo.SystemUser">
+    <id column="userId" jdbcType="INTEGER" property="userid" />
+    <result column="userName" jdbcType="VARCHAR" property="username" />
+    <result column="userPassWord" jdbcType="VARCHAR" property="userpassword" />
+    <result column="userIsLockout" jdbcType="BIT" property="userislockout" />
+    <result column="userUpdateTime" jdbcType="TIMESTAMP" property="userupdatetime" />
+    <result column="userCreateTime" jdbcType="TIMESTAMP" property="usercreatetime" />
+    <result column="userLastLoginTime" jdbcType="TIMESTAMP" property="userlastlogintime" />
+    <result column="userLastLoginIp" jdbcType="VARCHAR" property="userlastloginip" />
+    <result column="userPassWrongCout" jdbcType="TINYINT" property="userpasswrongcout" />
+    <result column="userLockoutTime" jdbcType="TIMESTAMP" property="userlockouttime" />
+    <result column="userEmail" jdbcType="VARCHAR" property="useremail" />
+    <result column="userTelephone" jdbcType="VARCHAR" property="usertelephone" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    userId, userName, userPassWord, userIsLockout, userUpdateTime, userCreateTime, userLastLoginTime, 
+    userLastLoginIp, userPassWrongCout, userLockoutTime, userEmail, userTelephone
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from usertb
+    where userId = #{userid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from usertb
+    where userId = #{userid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.fly.pojo.SystemUser">
+    insert into usertb (userId, userName, userPassWord, 
+      userIsLockout, userUpdateTime, userCreateTime, 
+      userLastLoginTime, userLastLoginIp, userPassWrongCout, 
+      userLockoutTime, userEmail, userTelephone
+      )
+    values (#{userid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{userpassword,jdbcType=VARCHAR}, 
+      #{userislockout,jdbcType=BIT}, #{userupdatetime,jdbcType=TIMESTAMP}, #{usercreatetime,jdbcType=TIMESTAMP}, 
+      #{userlastlogintime,jdbcType=TIMESTAMP}, #{userlastloginip,jdbcType=VARCHAR}, #{userpasswrongcout,jdbcType=TINYINT}, 
+      #{userlockouttime,jdbcType=TIMESTAMP}, #{useremail,jdbcType=VARCHAR}, #{usertelephone,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fly.pojo.SystemUser">
+    insert into usertb
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        userId,
+      </if>
+      <if test="username != null">
+        userName,
+      </if>
+      <if test="userpassword != null">
+        userPassWord,
+      </if>
+      <if test="userislockout != null">
+        userIsLockout,
+      </if>
+      <if test="userupdatetime != null">
+        userUpdateTime,
+      </if>
+      <if test="usercreatetime != null">
+        userCreateTime,
+      </if>
+      <if test="userlastlogintime != null">
+        userLastLoginTime,
+      </if>
+      <if test="userlastloginip != null">
+        userLastLoginIp,
+      </if>
+      <if test="userpasswrongcout != null">
+        userPassWrongCout,
+      </if>
+      <if test="userlockouttime != null">
+        userLockoutTime,
+      </if>
+      <if test="useremail != null">
+        userEmail,
+      </if>
+      <if test="usertelephone != null">
+        userTelephone,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="userpassword != null">
+        #{userpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="userislockout != null">
+        #{userislockout,jdbcType=BIT},
+      </if>
+      <if test="userupdatetime != null">
+        #{userupdatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usercreatetime != null">
+        #{usercreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userlastlogintime != null">
+        #{userlastlogintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userlastloginip != null">
+        #{userlastloginip,jdbcType=VARCHAR},
+      </if>
+      <if test="userpasswrongcout != null">
+        #{userpasswrongcout,jdbcType=TINYINT},
+      </if>
+      <if test="userlockouttime != null">
+        #{userlockouttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="useremail != null">
+        #{useremail,jdbcType=VARCHAR},
+      </if>
+      <if test="usertelephone != null">
+        #{usertelephone,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fly.pojo.SystemUser">
+    update usertb
+    <set>
+      <if test="username != null">
+        userName = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="userpassword != null">
+        userPassWord = #{userpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="userislockout != null">
+        userIsLockout = #{userislockout,jdbcType=BIT},
+      </if>
+      <if test="userupdatetime != null">
+        userUpdateTime = #{userupdatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usercreatetime != null">
+        userCreateTime = #{usercreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userlastlogintime != null">
+        userLastLoginTime = #{userlastlogintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userlastloginip != null">
+        userLastLoginIp = #{userlastloginip,jdbcType=VARCHAR},
+      </if>
+      <if test="userpasswrongcout != null">
+        userPassWrongCout = #{userpasswrongcout,jdbcType=TINYINT},
+      </if>
+      <if test="userlockouttime != null">
+        userLockoutTime = #{userlockouttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="useremail != null">
+        userEmail = #{useremail,jdbcType=VARCHAR},
+      </if>
+      <if test="usertelephone != null">
+        userTelephone = #{usertelephone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where userId = #{userid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fly.pojo.SystemUser">
+    update usertb
+    set userName = #{username,jdbcType=VARCHAR},
+      userPassWord = #{userpassword,jdbcType=VARCHAR},
+      userIsLockout = #{userislockout,jdbcType=BIT},
+      userUpdateTime = #{userupdatetime,jdbcType=TIMESTAMP},
+      userCreateTime = #{usercreatetime,jdbcType=TIMESTAMP},
+      userLastLoginTime = #{userlastlogintime,jdbcType=TIMESTAMP},
+      userLastLoginIp = #{userlastloginip,jdbcType=VARCHAR},
+      userPassWrongCout = #{userpasswrongcout,jdbcType=TINYINT},
+      userLockoutTime = #{userlockouttime,jdbcType=TIMESTAMP},
+      userEmail = #{useremail,jdbcType=VARCHAR},
+      userTelephone = #{usertelephone,jdbcType=VARCHAR}
+    where userId = #{userid,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByNameAndPass" resultMap="BaseResultMap">
+    SELECT * FROM usertb WHERE userName=#{name} AND userPassWord = #{pass}
+  </select>
+
+  <select id="getPermissionByUserId">
+    	SELECT permissionValue FROM permissiontb WHERE
+	permissionId IN(SELECT permissionId FROM rolepermissiontb
+	WHERE roleId IN(SELECT roleId FROM userroletb
+	WHERE userId = #{userId}))
+  </select>
+
+
+</mapper>
