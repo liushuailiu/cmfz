@@ -19,7 +19,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         // 获取用户访问地址
         String path = request.getServletPath();
-        System.out.println(path);
         // URL满足条件,放行
         if(path.matches(SystemUtils.NO_INTERCEPTOR_PATH)){
             return true;
@@ -32,9 +31,20 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         //URL访问Controller
         if(handler instanceof HandlerMethod){
 
+            String token = request.getParameter("token");
+
             //获取该用户的所有权限
-            List<String> userJurisdictions = (List<String>) request.getSession().getAttribute(SystemUtils.CURRENT_PERMISSION);
-            if(userJurisdictions==null || userJurisdictions.isEmpty()){
+            List<String> userJurisdictions = null;
+            if(token==null || "".equals(token)){
+                throw new NoPermissionException("对不起,还没登录");
+            }
+            Token myToken = JsonWebToken.unSign(token,Token.class);
+
+            if(myToken != null){
+                userJurisdictions = myToken.getPermissions();
+            }
+
+            if(userJurisdictions==null){
                 throw new NoPermissionException("对不起,还没登录");
             }
 
@@ -42,12 +52,13 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
             HandlerMethod method = (HandlerMethod) handler;
             //得到访问所请求方法应该得到的权限
             String permissionValue = SystemUtils.getPermissionValueForMethod(method);
-            if(userJurisdictions != null && !userJurisdictions.contains(permissionValue))
-                throw new NoPermissionException("对不起,你无权访问");
-        }else{
-            System.out.println("你访问的是非控制器资源");
-        }
 
+            if("公共资源".equals(permissionValue))
+                return super.preHandle(request, response, handler);
+
+            if(!userJurisdictions.contains(permissionValue))
+                throw new NoPermissionException("对不起,你无权访问");
+        }
         return super.preHandle(request, response, handler);
     }
 

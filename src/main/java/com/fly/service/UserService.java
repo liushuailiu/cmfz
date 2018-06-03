@@ -1,6 +1,7 @@
 package com.fly.service;
 
 import com.fly.dao.SystemUserMapper;
+import com.fly.pojo.SystemRole;
 import com.fly.pojo.SystemUser;
 import com.fly.util.aop.SystemLogAnnotation;
 import com.fly.util.aop.SystemLogProperties;
@@ -24,5 +25,14 @@ public class UserService {
     public List<String> getUserPermissionByUserId(Integer userid) {
 
         return systemUserMapper.getPermissionByUserId(userid);
+    }
+
+    @SystemLogAnnotation(describe = SystemLogProperties.USER_ROLES_ALL)
+    public List<SystemRole> getUserRolesByUserId(Integer userid) {
+        return systemUserMapper.getUserRolesByUserId(userid);
+    }
+    @SystemLogAnnotation(describe = SystemLogProperties.USER_ROLES_ID_ALL)
+    public List<Integer> getUserRolesIDByUserId(Integer userid) {
+        return systemUserMapper.getUserRolesIDByUserId(userid);
     }
 }

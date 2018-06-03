@@ -11,6 +11,11 @@ public class SystemResult {
     //返回数据个数
     private Integer count;
 
+    public SystemResult(Integer code, Object data) {
+        super();
+        this.code = code;
+        this.data = data;
+    }
 
     public SystemResult(String msg , int code) {
         super();

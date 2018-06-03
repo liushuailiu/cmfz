@@ -1,6 +1,8 @@
 package com.fly.dao;
 
+import com.fly.pojo.SystemRole;
 import com.fly.pojo.SystemUser;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,7 +19,11 @@ public interface SystemUserMapper {
 
     int updateByPrimaryKey(SystemUser record);
 
-    SystemUser selectByNameAndPass(String name, String pass);
+    SystemUser selectByNameAndPass(@Param("name") String name, @Param("pass") String pass);
 
     List<String> getPermissionByUserId(Integer userid);
+
+    List<SystemRole> getUserRolesByUserId(Integer userid);
+
+    List<Integer> getUserRolesIDByUserId(Integer userid);
 }

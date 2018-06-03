@@ -22,9 +22,8 @@ public class SystemUtils {
             String modulePermission =  classRequestMapping.value()[0];
             //获取访问该方法的完整权限
             String permission = (modulePermission+":"+requestMapping.value()[0]).replace("/","");
-            System.out.println(permission);
             return permission;
         }
-        return null;
+        return "公共资源";
     }
 }

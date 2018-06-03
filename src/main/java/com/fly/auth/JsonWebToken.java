@@ -7,6 +7,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
@@ -15,14 +16,14 @@ import java.util.Map;
 public class JsonWebToken {
 
     private static final String SECRET = "secret";
-    private static final Gson gson = new Gson();
+    private static Gson gson = new Gson();
 
     /**
      * 创建JSONWEBTOKEN头部
      * @return
      */
     private static Map<String,Object> createHead(){
-        Map map = new HashMap();
+        Map<String , Object> map = new HashMap();
         map.put("typ","JWT");
         map.put("alg","HS256");
         return map;
@@ -55,7 +56,7 @@ public class JsonWebToken {
      * @return
      * @throws UnsupportedEncodingException
      */
-    public static <T> T unsign(String token,Class<T> tClass) throws UnsupportedEncodingException {
+    public static <T> T unSign(String token, Class<T> tClass) throws IOException {
         JWTVerifier verifier = JWT.require(Algorithm.HMAC256(SECRET)).build();
         DecodedJWT decodedJWT = verifier.verify(token);
         Date date = decodedJWT.getExpiresAt();
