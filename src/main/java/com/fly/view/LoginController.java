@@ -2,7 +2,6 @@ package com.fly.view;
 
 import com.fly.auth.JsonWebToken;
 import com.fly.auth.Token;
-import com.fly.pojo.SystemRole;
 import com.fly.pojo.SystemUser;
 import com.fly.service.UserService;
 import com.fly.util.system.SystemResult;

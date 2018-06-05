@@ -53,9 +53,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
             //得到访问所请求方法应该得到的权限
             String permissionValue = SystemUtils.getPermissionValueForMethod(method);
 
-            if("公共资源".equals(permissionValue))
-                return super.preHandle(request, response, handler);
-
             if(!userJurisdictions.contains(permissionValue))
                 throw new NoPermissionException("对不起,你无权访问");
         }

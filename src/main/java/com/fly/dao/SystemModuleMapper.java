@@ -22,4 +22,6 @@ public interface SystemModuleMapper {
 
     List<SystemModule> queryModuleTreeByRoleID(Integer[] roles);
 
+    List<SystemModule> selectSystemModule();
+
 }

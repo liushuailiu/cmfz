@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script src="../js/layui/layui.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="../js/layui/css/layui.css" media="all">
+    <link rel="stylesheet" type="text/css" href="../js/zTree/css/zTreeStyle/zTreeStyle.css"/>
+    <link rel="stylesheet" type="text/css" href="../js/zTree/css/demo.css"/>
+    <script type="text/javascript" src="../js/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/zTree/js/jquery.ztree.core.js"></script>
+    <script type="text/javascript" src="../js/crm.js"></script>
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+
+
+<form class="layui-form" action="" lay-filter="example">
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">模块名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="modulename" readonly="readonly" lay-verify="title" autocomplete="off" placeholder="请输入模块名称"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">模块权重</label>
+            <div class="layui-input-block">
+                <input type="text" name="moduleweight" readonly="readonly" lay-verify="number" autocomplete="off" placeholder="请输入模块权重"
+                       class="layui-input">
+            </div>
+        </div>
+
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">模块路径</label>
+        <div class="layui-input-block">
+            <input type="text" name="moduleurl" readonly="readonly" lay-verify="title" autocomplete="off" placeholder="请输入模块路径"
+                   class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">所属模块</label>
+        <div class="layui-input-block">
+            <input type="text" name="parentName" id="parentName" readonly="readonly" placeholder="请输入父模块名称"
+                   autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+
+        <div class="layui-inline">
+            <label class="layui-form-label">修改时间</label>
+            <div class="layui-input-inline">
+            <input type="text" name="modulelastupdatetime" readonly="readonly" placeholder="请输入父模块名称"
+                   autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">创建时间</label>
+            <div class="layui-input-inline">
+            <input type="text" name="modulecreatetime" readonly="readonly" placeholder="请输入父模块名称"
+                   autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+</form>
+
+<script>
+
+    var module = null;
+    $(function () {
+        module = JSON.parse(sessionStorage.getItem("DATA"));
+    });
+
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form, layer = layui.layer
+
+        form.val('example', {
+            "modulename": module.modulename
+            , "moduleurl": module.moduleurl
+            , "parentName": module.parentName
+            , "moduleid": module.moduleid
+            , "parentid": module.parentid
+            , "moduleweight": module.moduleweight
+            , "modulelastupdatetime":module.modulelastupdatetime
+            , "modulecreatetime":module.modulecreatetime
+        })
+
+    });
+</script>
+
+</body>
+</html>

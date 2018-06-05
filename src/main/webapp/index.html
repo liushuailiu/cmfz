@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>學生管理系統首頁</title>
+
+    <link rel="stylesheet" type="text/css" href="js/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="js/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="js/easyui/demo/demo.css">
+    <link rel="stylesheet" type="text/css" href="js/zTree/css/zTreeStyle/zTreeStyle.css"/>
+    <link rel="stylesheet" type="text/css" href="js/zTree/css/demo.css"/>
+    <script type="text/javascript" src="js/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="js/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="js/crm.js"></script>
+    <script type="text/javascript" src="js/zTree/js/jquery.ztree.core.js"></script>
+    <script type="text/javascript" src="js/zTree/js/jquery.ztree.excheck.js"></script>
+    <script src="js/layui/layui.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="js/layui/css/layui.css" media="all">
+</head>
+
+<body>
+<div style="margin:20px 0;">
+
+</div>
+
+<div class="easyui-layout" style="width:100%;height:650px;">
+    <div data-options="region:'north'" style="height:50px"></div>
+    <!--<div data-options="region:'south',split:true" style="height:50px;"></div>-->
+    <!--<div data-options="region:'east',split:true" title="East" style="width:200px;"></div>-->
+    <div data-options="region:'west',split:true" title="菜单" style="width:200px;">
+        <!--导航菜单-->
+        <ul id="treeDemo" class="ztree"></ul>
+
+    </div>
+    <div data-options="region:'center',iconCls:'icon-ok'">
+
+        <div id="tt" class="easyui-tabs" fit="true">
+            <div style="text-align: center;" title="首页">
+
+                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                    <legend>项目进度记录</legend>
+                </fieldset>
+                <ul class="layui-timeline">
+                    <li class="layui-timeline-item">
+                        <i class="layui-icon layui-timeline-axis"></i>
+                        <div class="layui-timeline-content layui-text">
+                            <div class="layui-timeline-title">2018年6月5日。模块部分完成</div>
+                        </div>
+                    </li>
+                    <li class="layui-timeline-item">
+                        <i class="layui-icon layui-timeline-axis"></i>
+                        <div class="layui-timeline-content layui-text">
+                            <div class="layui-timeline-title">2017年，layui 里程碑版本 2.0 发布</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+<SCRIPT LANGUAGE="JavaScript">
+
+    //获取用户负责模块,生成导航栏
+    $(function () {
+        var zTreeObj;
+        // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
+        var setting = {
+            data: { //数据配置
+                key: {
+                    name: "modulename"
+                },
+                simpleData: { //简单数据模式
+                    enable: true, //是否启用简单数据模式
+                    idKey: "moduleid", //设置节点id属性名
+                    pIdKey: "parentid", //设置父节点属性名
+                    rootPId: 0 //设置根节点，默认值null
+                }
+            },
+            callback: {
+                onClick: function (event, treeId, treeNode, clickFlag) {
+                    openNewPage(treeNode);
+                }
+            }
+        };
+        $.post("module/queryModule", {
+            "roles": crm.getRoles(),
+            "token": crm.getToken()
+        }, function (res) {
+            zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, res);
+            zTreeObj.expandAll(true);
+        }, "json");
+
+        // $("#tt").tabs(
+        //     'add', {
+        //         title: '主页',
+        //         closable: true,
+        //         border: true,
+        //         content: "<iframe width='100%' height='100%' src='content.html'></iframe>",
+        //         fit: true
+        //     }
+        // );
+
+    });
+
+    function openNewPage(obj) {
+
+        if (obj.moduleurl == null) {
+            return;
+        }
+        if ($('#tt').tabs('exists', obj.modulename)) { //treeNode.name对应数据zNodes中的name
+            //如果存在选项卡，切换到该选项卡中
+            $('#tt').tabs('select', obj.modulename);
+        } else {
+            $("#tt").tabs(
+                'add', {
+                    title: obj.modulename,
+                    closable: true,
+                    border: true,
+                    content: "<iframe width='100%' height='100%' src='" + obj.moduleurl + "'></iframe>",
+                    fit: true
+                }
+            );
+        }
+    }
+
+</script>
+
+</html>

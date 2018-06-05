@@ -13,6 +13,12 @@
   <sql id="Base_Column_List">
     moduleId, parentId, moduleName, moduleWeight, moduleUrl, moduleCreateTime, moduleLastUpdateTime
   </sql>
+
+  <select id="selectSystemModule" resultMap="BaseResultMap">
+      select m.*,t.moduleName as parentName from moduletb m left join moduletb t
+      on m.parentId = t.moduleId order by m.moduleWeight
+  </select>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -123,6 +129,7 @@
       <foreach collection="array" item="role" open="(" close=")" separator=",">
         #{role}
       </foreach>
+    order by m.moduleWeight
 
   </select>
 

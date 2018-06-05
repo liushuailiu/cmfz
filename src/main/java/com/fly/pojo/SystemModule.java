@@ -5,11 +5,15 @@ import java.util.Date;
 /**
  * 系统模块表
  */
+
+
 public class SystemModule {
     
     private Integer moduleid;
 
     private Integer parentid;
+
+    private String parentName;
 
     private String modulename;
 
@@ -20,6 +24,14 @@ public class SystemModule {
     private Date modulecreatetime;
 
     private Date modulelastupdatetime;
+
+    public String getParentName() {
+        return parentName;
+    }
+
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
+    }
 
     public Integer getModuleid() {
         return moduleid;
@@ -75,5 +87,19 @@ public class SystemModule {
 
     public void setModulelastupdatetime(Date modulelastupdatetime) {
         this.modulelastupdatetime = modulelastupdatetime;
+    }
+
+    @Override
+    public String toString() {
+        return "SystemModule{" +
+                "moduleid=" + moduleid +
+                ", parentid=" + parentid +
+                ", parentName='" + parentName + '\'' +
+                ", modulename='" + modulename + '\'' +
+                ", moduleweight=" + moduleweight +
+                ", moduleurl='" + moduleurl + '\'' +
+                ", modulecreatetime=" + modulecreatetime +
+                ", modulelastupdatetime=" + modulelastupdatetime +
+                '}';
     }
 }

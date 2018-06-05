@@ -28,15 +28,23 @@
                         <value>application/json;charset=UTF-8</value>
                     </list>
                 </property>
+                <!--日期格式处理-->
+                <property name="gson">
+                    <bean class="org.springframework.http.converter.json.GsonFactoryBean">
+                        <property name="serializeNulls" value="true"/>
+                        <property name="disableHtmlEscaping" value="true"/>
+                        <property name="dateFormatPattern" value="yyyy-MM-dd HH:mm:ss" />
+                    </bean>
+                </property>
             </bean>
         </mvc:message-converters>
     </mvc:annotation-driven>
 
     <!--拦截器配置-->
 
-    <mvc:interceptors>
-        <bean class="com.fly.auth.LoginInterceptor"/>
-        <bean class="com.fly.auth.EncodingInterceptor"/>
-    </mvc:interceptors>
+    <!--<mvc:interceptors>-->
+        <!--<bean class="com.fly.auth.LoginInterceptor"/>-->
+        <!--<bean class="com.fly.auth.EncodingInterceptor"/>-->
+    <!--</mvc:interceptors>-->
 
 </beans>
