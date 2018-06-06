@@ -3,7 +3,7 @@
 <mapper namespace="com.fly.dao.LogMessageMapper">
   <resultMap id="BaseResultMap" type="com.fly.pojo.LogMessage">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="user_name" jdbcType="VARCHAR" property="user_name" />
     <result column="rules" jdbcType="VARCHAR" property="rules" />
     <result column="desciption" jdbcType="VARCHAR" property="desciption" />
     <result column="argus" jdbcType="VARCHAR" property="argus" />
@@ -15,7 +15,7 @@
     <result column="exception" jdbcType="LONGVARCHAR" property="exception" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, username, rules, desciption, argus, success, runtime, startTime
+    id, user_name, rules, desciption, argus, success, runtime, startTime
   </sql>
   <sql id="Blob_Column_List">
     exception
@@ -33,11 +33,11 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.fly.pojo.LogMessage">
-    insert into logmessage (id, username, rules, 
+    insert into logmessage (id, user_name, rules,
       desciption, argus, success, 
       runtime, startTime, exception
       )
-    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{rules,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{user_name,jdbcType=VARCHAR}, #{rules,jdbcType=VARCHAR},
       #{desciption,jdbcType=VARCHAR}, #{argus,jdbcType=VARCHAR}, #{success,jdbcType=VARCHAR}, 
       #{runtime,jdbcType=VARCHAR}, #{starttime,jdbcType=DATE}, #{exception,jdbcType=LONGVARCHAR}
       )
@@ -48,8 +48,8 @@
       <if test="id != null">
         id,
       </if>
-      <if test="username != null">
-        username,
+      <if test="user_name != null">
+        user_name,
       </if>
       <if test="rules != null">
         rules,
@@ -77,8 +77,8 @@
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="username != null">
-        #{username,jdbcType=VARCHAR},
+      <if test="user_name != null">
+        #{user_name,jdbcType=VARCHAR},
       </if>
       <if test="rules != null">
         #{rules,jdbcType=VARCHAR},
@@ -106,8 +106,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.fly.pojo.LogMessage">
     update logmessage
     <set>
-      <if test="username != null">
-        username = #{username,jdbcType=VARCHAR},
+      <if test="user_name != null">
+        user_name = #{user_name,jdbcType=VARCHAR},
       </if>
       <if test="rules != null">
         rules = #{rules,jdbcType=VARCHAR},
@@ -135,7 +135,7 @@
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.fly.pojo.LogMessage">
     update logmessage
-    set username = #{username,jdbcType=VARCHAR},
+    set user_name = #{user_name,jdbcType=VARCHAR},
       rules = #{rules,jdbcType=VARCHAR},
       desciption = #{desciption,jdbcType=VARCHAR},
       argus = #{argus,jdbcType=VARCHAR},
@@ -147,7 +147,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.fly.pojo.LogMessage">
     update logmessage
-    set username = #{username,jdbcType=VARCHAR},
+    set user_name = #{user_name,jdbcType=VARCHAR},
       rules = #{rules,jdbcType=VARCHAR},
       desciption = #{desciption,jdbcType=VARCHAR},
       argus = #{argus,jdbcType=VARCHAR},

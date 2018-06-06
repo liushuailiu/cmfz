@@ -23,13 +23,43 @@
     </context:component-scan>
 
     <context:property-placeholder location="classpath:jdbc.properties" ignore-unresolvable="true"/>
+    <context:property-placeholder location="classpath:redis.properties" />
+
+    <!-- redis 配置 -->
+    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+         <property name="maxIdle" value="${redis.maxIdle}" />
+          <property name="minIdle" value="${redis.minIdle}" />
+         <property name="maxWaitMillis" value="${redis.maxWait}" />
+           <property name="testOnBorrow" value="${redis.testOnBorrow}" />
+    </bean>
+
+    <!-- redis服务器中心 -->
+    <bean id="connectionFactory"
+          class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <property name="poolConfig" ref="poolConfig" />
+        <property name="port" value="${redis.port}" />
+        <property name="hostName" value="${redis.host}" />
+        <property name="password" value="${redis.pass}" />
+        <property name="timeout" value="${redis.timeout}" />
+    </bean>
+    <!-- redis操作模板，面向对象的模板 -->
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
+        <property name="connectionFactory" ref="connectionFactory" />
+        <!-- 如果不配置Serializer，那么存储的时候只能使用String，如果用对象类型存储，那么会提示错误 -->
+        <property name="keySerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+        </property>
+        <property name="valueSerializer">
+            <bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer" />
+        </property>
+    </bean>
 
 
     <!--配置数据源-->
     <bean id="comboPooledDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="driverClass" value="${jdbc.driverClass}"/>
         <property name="jdbcUrl" value="${jdbc.jdbcUrl}"/>
-        <property name="user" value="${jdbc.user}"/>
+        <property name="user" value="${jdbc.user_name}"/>
         <property name="password" value="${jdbc.password}"/>
     </bean>
 
@@ -83,16 +113,16 @@
         </property>
     </bean>
 
-    <!--<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">-->
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 
-        <!--<property name="exceptionMappings">-->
-            <!--<props>-->
-                <!--<prop key="java.lang.Exception">redirect:http://127.0.0.1:8020/crm/404.html</prop>-->
-                <!--<prop key="com.fly.util.exception.NoPermissionException">redirect:http://127.0.0.1:8020/crm/login.html</prop>-->
-            <!--</props>-->
-        <!--</property>-->
+        <property name="exceptionMappings">
+            <props>
+                <prop key="java.lang.Exception">redirect:/404.html</prop>
+                <prop key="com.fly.util.exception.NoPermissionException">redirect:/login.html</prop>
+            </props>
+        </property>
 
-    <!--</bean>-->
+    </bean>
 
 
     <aop:config>

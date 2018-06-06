@@ -16,10 +16,10 @@ Version 1.5.5
  * combo: The 'blur' event handler is attached to the 'inputEvents' property.
  * numberbox: The 'cloneFrom' method is available.
  * slider: The 'step' property can be set with a floating number.
- * menu: The 'findItem' method allows the user to find menu item by any parameters.
+ * menu: The 'findItem' method allows the user_name to find menu item by any parameters.
  * menubutton: Add 'showEvent' and 'hideEvent' properties.
 * New Plugins
- * maskedbox: The maskedbox enforces its structure as the user types.
+ * maskedbox: The maskedbox enforces its structure as the user_name types.
 
 Version 1.5.4
 -------------
@@ -34,7 +34,7 @@ Version 1.5.4
  * combobox: The 'setValues' method can be called to initialize the displaying text.
  * combotreegrid: Press ENTER key to select the highlighted rows.
  * panel: Improve the resizing performance.
- * filebox: The 'files' method allows the user to get the selected file list.
+ * filebox: The 'files' method allows the user_name to get the selected file list.
  * searchbox: Improvent the 'selectName' method.
 
 Version 1.5.3
@@ -62,11 +62,11 @@ Version 1.5.2
  * datagrid: Calling the 'selectRow' method on an unexisting row causes undesired record set. fixed.
 * Improvement
  * datagrid: The ctrl selection is supported on Mac keyboards.
- * datagrid: The 'scrollOnSelect' property is available for the user to determine whether to scroll to the specified row when selecting it.
+ * datagrid: The 'scrollOnSelect' property is available for the user_name to determine whether to scroll to the specified row when selecting it.
  * combotree: Add the 'textField' property.
  * combotreegrid: Add the 'textField' property.
  * pagination: Add 'showPageInfo' property.
- * panel: Add 'halign' and 'titleDirection' properties to allow the user to align the panel header to left or right side.
+ * panel: Add 'halign' and 'titleDirection' properties to allow the user_name to align the panel header to left or right side.
  * accordion: Add 'halign' property to build the horizontal accordion.
  * tagbox: The 'required' propery can be applied to validate whether the value is empty.
 
@@ -80,14 +80,14 @@ Version 1.5.1
  * form: The 'clear' method does not clear the selected drop-down items of the combobox. fixed.
 * Improvement
  * textbox: The 'cls' property is available to add a custom style to textbox.
- * numberbox: Allow the user to format currency in Italian.
- * combo: Add 'multivalue' property that allows the user to determine how to submit the multiple values.
+ * numberbox: Allow the user_name to format currency in Italian.
+ * combo: Add 'multivalue' property that allows the user_name to determine how to submit the multiple values.
  * combobox: Add 'reversed' property.
  * combobox: Add 'onClick' event.
  * combogrid: Add 'reversed' property.
  * treegrid: Enable multiple selection with the shift key.
 * New Plugins
- * tagbox: Allows the user to add tags to a form field.
+ * tagbox: Allows the user_name to add tags to a form field.
 
 Version 1.5
 -------------
@@ -98,16 +98,16 @@ Version 1.5
  * A label can be associated to any form fields.
  * combobox: Enhance the 'select' and 'unselect' rules on the drop-down items.
  * combobox: Add 'limitToList' property to limit the inputed values to the listed items.
- * combogrid: Allow the user to clone the component quickly.
- * form: Add the 'dirty' property that allows the user to submit the only changed fields.
+ * combogrid: Allow the user_name to clone the component quickly.
+ * form: Add the 'dirty' property that allows the user_name to submit the only changed fields.
  * form: Add 'resetDirty' method.
- * datagrid: Allow the user to display a message when there are no records to be shown.
+ * datagrid: Allow the user_name to display a message when there are no records to be shown.
  * textbox: Add 'label','labelWidth','labelPosition' and 'labelAlign' properties.
  * spinner: Add 'spinAlign' property.
- * calendar: Allow the user to display week number of the year.
+ * calendar: Allow the user_name to display week number of the year.
  * window: Add 'constrain' property.
 * New Plugins
- * passwordbox: The plugin that allows the user to input passwords with nice feedback.
+ * passwordbox: The plugin that allows the user_name to input passwords with nice feedback.
  * combotreegrid: Combines combobox with drop-down treegrid component.
 
 Version 1.4.5
@@ -118,7 +118,7 @@ Version 1.4.5
  * tree: The 'onLoadSuccess' event fires when append or insert a node. fixed.
 * Improvement
  * window: The displaying style can be customized.
- * window: The 'border' property allows the user to set different border style.
+ * window: The 'border' property allows the user_name to set different border style.
  * navpanel: The 'href' property is enabled to load content from remote server.
  * combotree: The 'setValue' and 'setValues' methods accept the paremter values in 'id' and 'text' pairs
  * combobox: Add 'showItemIcon' property.
@@ -126,7 +126,7 @@ Version 1.4.5
  * messager: Pressing ENTER key on input box will trigger click event of the first button.
  * validatebox: Add 'editable',disabled' and 'readonly' properties.
  * validatebox: Add 'enable','disable','readonly' methods.
- * validatebox: Allow the user to determine how to display the error message.
+ * validatebox: Allow the user_name to determine how to display the error message.
  * filebox: Add 'accept' and 'multiple' properties.
  * form: Add 'iframe' property and 'onProgress' event.
  * treegrid: Add cascade checkbox selection.
@@ -163,7 +163,7 @@ Version 1.4.3
  * combogrid: The 'setValue' and 'setValues' methods accept a key-value object.
  * window: The inline window's mask can auto-stretch its size to fill parent container.
  * tabs: The 'showTool' and 'hideTool' methods are available for users to show or hide the tools.
- * layout: Allow the user to override the 'cls','headerCls' and 'bodyCls' property values.
+ * layout: Allow the user_name to override the 'cls','headerCls' and 'bodyCls' property values.
 * New Plugins
  * switchbutton: The switch button with two states:'on' and 'off'.
 
@@ -172,10 +172,10 @@ Version 1.4.2
 * Bug
  * treegrid: The column will restore its size to original size after recreating the treegrid. fixed.
 * Improvement
- * draggable: Add 'delay' property that allows the user to delay the drag operation.
+ * draggable: Add 'delay' property that allows the user_name to delay the drag operation.
  * tree: Add 'filter' property and 'doFilter' method.
- * tabs: The 'add' method allows the user to insert a tab panel at a specified index.
- * tabs: The user can determine what tab panel can be selected.
+ * tabs: The 'add' method allows the user_name to insert a tab panel at a specified index.
+ * tabs: The user_name can determine what tab panel can be selected.
  * tabs: Add 'justified' and 'narrow' properties.
  * layout: Add 'unsplit' and 'split' methods.
  * messager: Keyboard navigation features are supported now.
@@ -183,7 +183,7 @@ Version 1.4.2
  * combobox: Add 'queryParams' property.
  * slider: Add 'range' property.
  * menu: Add 'itemHeight','inline','noline' properties.
- * panel: The 'header' property allows the user to customize the panel header.
+ * panel: The 'header' property allows the user_name to customize the panel header.
  * menubutton: Add 'hasDownArrow' property.
 * New Plugins
  * datalist: The plugin to render items in a list.
@@ -198,12 +198,12 @@ Version 1.4.1
  * menubutton: Calling 'enable' method on a disabled button can not work well. fixed.
  * form: The filebox components in the form do not work correctly after calling 'clear' method. fixed.
 * Improvement
- * tabs: The 'update' method accepts 'type' option that allows the user to update the header,body,or both.
+ * tabs: The 'update' method accepts 'type' option that allows the user_name to update the header,body,or both.
  * panel: Add 'openAnimation','openDuration','closeAnimation' and 'closeDuration' properties to set the animation for opening or closing a panel.
- * panel: Add 'footer' property that allows the user to add a footer bar to the bottom of panel.
+ * panel: Add 'footer' property that allows the user_name to add a footer bar to the bottom of panel.
  * datagrid: Calling 'endEdit' method will accept the editing value correctly.
  * datagrid: Add 'onBeforeSelect','onBeforeCheck','onBeforeUnselect','onBeforeUncheck' events.
- * propertygrid: The user can edit a row by calling 'beginEdit' method.
+ * propertygrid: The user_name can edit a row by calling 'beginEdit' method.
  * datebox: Add 'cloneFrom' method to create the datebox component quickly.
  * datetimebox: Add 'cloneFrom' method to create the datetimebox component quickly.
 
@@ -216,7 +216,7 @@ Version 1.4
  * The fluid/percentange size is supported now for all easyui components.
  * menu: Add 'showItem', 'hideItem' and 'resize' methods.
  * menu: Auto resize the height upon the window size.
- * menu: Add 'duration' property that allows the user to define duration time in milliseconds to hide menu.
+ * menu: Add 'duration' property that allows the user_name to define duration time in milliseconds to hide menu.
  * validatebox: Add 'onBeforeValidate' and 'onValidate' events.
  * combo: Extended from textbox now.
  * combo: Add 'panelMinWidth','panelMaxWidth','panelMinHeight' and 'panelMaxHeight' properties.
@@ -226,7 +226,7 @@ Version 1.4
  * datetimebox: Add 'spinnerWidth' property.
  * panel: Add 'doLayout' method to cause the panel to lay out its components.
  * panel: Add 'clear' method to clear the panel's content.
- * datagrid: The user is allowed to assign percent width to columns.
+ * datagrid: The user_name is allowed to assign percent width to columns.
  * form: Add 'ajax','novalidate' and 'queryParams' properties.
  * linkbutton: Add 'resize' method.
 * New Plugins
@@ -244,7 +244,7 @@ Version 1.3.6
  * linkbutton: The icon alignment is fully supported, possible values are: 'top','bottom','left','right'.
  * linkbutton: Add 'size' property, possible values are: 'small','large'.
  * linkbutton: Add 'onClick' event.
- * menubutton: Add 'menuAlign' property that allows the user set top level menu alignment.
+ * menubutton: Add 'menuAlign' property that allows the user_name set top level menu alignment.
  * combo: Add 'panelAlign' property, possible values are: 'left','right'.
  * calendar: The 'formatter','styler' and 'validator' options are available to custom the calendar dates.
  * calendar: Add 'onChange' event.
@@ -372,7 +372,7 @@ Version 1.3.1
  * droppable: Add 'disabled' property.
  * droppable: Add 'options','enable' and 'disable' methods.
  * tabs: The tab panel tools can be changed by calling 'update' method.
- * messager: When show a message window, the user can define the window position by applying 'style' property.
+ * messager: When show a message window, the user_name can define the window position by applying 'style' property.
  * window: Prevent script on window body from running twice.
  * window: Add 'hcenter','vcenter' and 'center' methods.
  * tree: Add 'onBeforeCheck' callback event.
@@ -430,7 +430,7 @@ Version 1.2.6
  * combobox: Add 'loader' option that allow users to define how to load data from remote server.
  * Add support for other loading mode such as dwr,xml,etc.
 * New Plugins
- * slider: Allows the user to choose a numeric value from a finite range.
+ * slider: Allows the user_name to choose a numeric value from a finite range.
 
 Version 1.2.5
 -------------
@@ -531,11 +531,11 @@ Version 1.2
  * datagrid: Extend from panel, so many properties defined in panel can be used for datagrid.
 * New Plugins
  * treegrid: Represent tabular data in hierarchical view, combines tree view and datagrid.
- * combo: The basic component that allow user to extend their combo component such as combobox,combotree,etc.
+ * combo: The basic component that allow user_name to extend their combo component such as combobox,combotree,etc.
  * combogrid: Combines combobox with drop-down datagrid component.
  * spinner: The basic plugin to create numberspinner,timespinner,etc.
- * numberspinner: The numberbox that allow user to change value by clicking up and down spin buttons.
- * timespinner: The time selector that allow user to quickly inc/dec a time.
+ * numberspinner: The numberbox that allow user_name to change value by clicking up and down spin buttons.
+ * timespinner: The time selector that allow user_name to quickly inc/dec a time.
  
 Version 1.1.2
 -------------
@@ -588,11 +588,11 @@ Version 1.0.5
 * Bug
  * panel: The fit property of panel performs incorrectly. fixed.
 * Improvement
- * menu: Add a href attribute for menu item, with which user can display a different page in the current browser window.
+ * menu: Add a href attribute for menu item, with which user_name can display a different page in the current browser window.
  * form: Add a validate method to do validation for validatebox component.
  * dialog: The dialog can read collapsible,minimizable,maximizable and resizable attribute from markup.
 * New Plugins
- * validatebox: A validation plugin that checks to make sure the user's input value is valid. 
+ * validatebox: A validation plugin that checks to make sure the user_name's input value is valid.
  
 Version 1.0.4
 -------------

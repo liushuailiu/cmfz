@@ -85,7 +85,7 @@ CREATE TABLE `permissiontb` (
 
 
 
-insert  into `permissiontb`(`permissionId`,`permissionValue`,`permissionModule`,`permissionName`,`permissionLastUpdateTime`) values (1,'user:insert','用户模块','用户新增','2018-05-11 13:07:00'),(2,'user:delete','用户模块','用户删除','2018-05-11 13:07:03'),(3,'user:update','用户模块','用户修改','2018-05-11 13:07:07');
+insert  into `permissiontb`(`permissionId`,`permissionValue`,`permissionModule`,`permissionName`,`permissionLastUpdateTime`) values (1,'user_name:insert','用户模块','用户新增','2018-05-11 13:07:00'),(2,'user_name:delete','用户模块','用户删除','2018-05-11 13:07:03'),(3,'user_name:update','用户模块','用户修改','2018-05-11 13:07:07');
 
 
 

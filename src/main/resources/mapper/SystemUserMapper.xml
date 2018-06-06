@@ -44,7 +44,7 @@
       userLastLoginTime, userLastLoginIp, userPassWrongCout, 
       userLockoutTime, userEmail, userTelephone
       )
-    values (#{userid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{userpassword,jdbcType=VARCHAR}, 
+    values (#{userid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{userpassword,jdbcType=VARCHAR},
       #{userislockout,jdbcType=BIT}, #{userupdatetime,jdbcType=TIMESTAMP}, #{usercreatetime,jdbcType=TIMESTAMP}, 
       #{userlastlogintime,jdbcType=TIMESTAMP}, #{userlastloginip,jdbcType=VARCHAR}, #{userpasswrongcout,jdbcType=TINYINT}, 
       #{userlockouttime,jdbcType=TIMESTAMP}, #{useremail,jdbcType=VARCHAR}, #{usertelephone,jdbcType=VARCHAR}

@@ -6,13 +6,17 @@ import com.fly.pojo.SystemUser;
 import com.fly.service.UserService;
 import com.fly.util.system.SystemResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping(value = "/login",name = "登录")
@@ -21,6 +25,9 @@ public class LoginController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     //用户登录操作
     @PostMapping("/confirm")
@@ -36,12 +43,16 @@ public class LoginController {
         //根据用户ID得到用户的所有权限
         List<String> userPermissions = userService.getUserPermissionByUserId(systemUser.getUserid());
         //用户登录令牌对象
-        Token token = new Token(systemUser.getUserid(),userPermissions);
+        Token token = new Token(systemUser.getUserid(),systemUser.getUsername(),userPermissions);
         String tokenString = "";
         try {
+
             //将TOKEN对象加密
             tokenString = JsonWebToken.sign(token,4*60*60*1000);
-        } catch (UnsupportedEncodingException e) {
+            //将TOKEN存入到redis
+            redisTemplate.opsForValue().set(systemUser.getUsername(),tokenString,4,TimeUnit.HOURS);
+
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
