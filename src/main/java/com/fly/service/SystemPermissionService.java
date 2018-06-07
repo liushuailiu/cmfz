@@ -1,8 +1,11 @@
 package com.fly.service;
 
 import com.fly.dao.SystemPermissionMapper;
+import com.fly.pojo.SystemModule;
 import com.fly.pojo.SystemPermission;
 import com.fly.util.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +21,10 @@ public class SystemPermissionService  {
     public Integer updateSystemPermission(List<SystemPermission> permission){
 
         Integer count = permissionMapper.batchInsert(permission);
-        Integer counts = permissionMapper.batchInsertRolePermission(permission);
-        return count + counts ;
+
+        permissionMapper.batchInsertRolePermission(permission);
+
+        return count  ;
     }
 
     public List<String> queryAll() {
@@ -27,7 +32,35 @@ public class SystemPermissionService  {
     }
 
     public Page selectPermission(Integer page, Integer limit) {
+        PageHelper.startPage(page,limit);
+        List<SystemPermission> list = permissionMapper.selectPermission();
+        PageInfo pageInfo = new PageInfo(list);
+        return new Page(pageInfo);
+    }
 
-        return null;
+    public Page selectPermissionModule(Integer role, Integer page, Integer limit) {
+
+        PageHelper.startPage(page,limit);
+        List<SystemPermission> list = permissionMapper.selectPermissionModule(role);
+        for (SystemPermission s:list) {
+            if(s.getRoleID()==null){
+                s.setRoleID(Integer.MIN_VALUE);
+            }
+        }
+        PageInfo pageInfo = new PageInfo(list);
+        return new Page(pageInfo);
+
+    }
+
+    public Page queryPerForModule(String module) {
+        List<SystemPermission> list = permissionMapper.selectPermissionForModule(module);
+        Page page = new Page(200,list);
+        return page;
+    }
+
+    public Page updateRoleGetPermission(Integer role, Integer pId) {
+        Integer count = permissionMapper.insertRoleGetPermission(role,pId);
+        Page page = count<=0 ? new Page(500):new Page(200);
+        return page;
     }
 }

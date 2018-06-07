@@ -15,27 +15,23 @@
 <body>
 
 <table class="layui-table"
-       lay-data="{url:'/module/query', page:true, id:'idTest'}"
+       lay-data="{url:'/system/updatePermission', page:true, id:'idTest'}"
        lay-filter="demo">
     <thead>
     <tr>
-        <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
-        <th lay-data="{field:'moduleid', width:80, sort: true, fixed: true, align:'center'}">模块ID</th>
-        <th lay-data="{field:'modulename', width:200, align:'center'}">模块名称</th>
-        <th lay-data="{field:'modulelastupdatetime', width:200, sort: true, align:'center'}">最后修改时间</th>
-        <th lay-data="{field:'parentid',  sort: true , width:150, align:'center'}">所属模块ID</th>
-        <th lay-data="{field:'parentName', width:160, align:'center'}">所属模块名称</th>
-        <th lay-data="{field:'moduleurl', width:200, align:'center'}">模块路径</th>
-        <th lay-data="{field:'moduleweight', width:80}">权重</th>
+
+        <th lay-data="{field:'permissionid', width:80, sort: true, fixed: true, align:'center'}">权限ID</th>
+        <th lay-data="{field:'permissionmodule', width:200, align:'center'}">权限所属模块</th>
+        <th lay-data="{field:'permissionname', width:200, sort: true, align:'center'}">权限详情</th>
+        <th lay-data="{field:'permissionvalue' , width:350, align:'center'}">权限内容</th>
         <th lay-data="{fixed: 'right', width:178, align:'center', toolbar: '#barDemo'}"></th>
+
     </tr>
     </thead>
 </table>
 
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 
 

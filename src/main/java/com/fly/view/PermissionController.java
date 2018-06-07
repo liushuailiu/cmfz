@@ -4,6 +4,7 @@ import com.fly.pojo.SystemPermission;
 import com.fly.service.SystemPermissionService;
 import com.fly.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,6 +26,31 @@ public class PermissionController {
     @Autowired
     private SystemPermissionService systemPermissionService;
 
+
+    /**
+     * 查询拥有模块的所有权限
+     * @return
+     */
+    @GetMapping(value = "/queryModule",name = "查询拥有权限的模块")
+    public Page queryModuleByPermission(Integer role,Integer page,Integer limit){
+        return systemPermissionService.selectPermissionModule(role,page,limit);
+    }
+
+    @PostMapping(value = "/get",name = "给角色分配权限")
+    public Page updateRoleGetPermission(Integer Role, Integer pId){
+        return systemPermissionService.updateRoleGetPermission(Role,pId);
+    }
+
+    /**
+     * 查询指定模块下的所有权限
+     * @param module 模块名称
+     * @return
+     */
+    @PostMapping(value = "/permission",name = "查询指定模块下所有权限")
+    public Page queryPerForModule(String module){
+        return systemPermissionService.queryPerForModule(module);
+    }
+
     /**
      * 查询系统中目前存在的所有权限
      * 1.首先更新系统中的所有权限
@@ -34,7 +60,7 @@ public class PermissionController {
      * @return
      */
 
-    @PostMapping(value = "/updatePermission",name = "更新系统权限")
+    @GetMapping(value = "/updatePermission",name = "更新系统权限")
     public Page updatePermission(Integer page,Integer limit){
         this.updateSystemPermission();
         return systemPermissionService.selectPermission(page,limit);

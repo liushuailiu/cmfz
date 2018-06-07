@@ -13,6 +13,16 @@ public class SystemPermission {
 
     private Date permissionlastupdatetime;
 
+    private Integer roleID;
+
+    public Integer getRoleID() {
+        return roleID;
+    }
+
+    public void setRoleID(Integer roleID) {
+        this.roleID = roleID;
+    }
+
     public Integer getPermissionid() {
         return permissionid;
     }
@@ -51,5 +61,16 @@ public class SystemPermission {
 
     public void setPermissionlastupdatetime(Date permissionlastupdatetime) {
         this.permissionlastupdatetime = permissionlastupdatetime;
+    }
+
+    @Override
+    public String toString() {
+        return "SystemPermission{" +
+                "permissionid=" + permissionid +
+                ", permissionvalue='" + permissionvalue + '\'' +
+                ", permissionmodule='" + permissionmodule + '\'' +
+                ", permissionname='" + permissionname + '\'' +
+                ", permissionlastupdatetime=" + permissionlastupdatetime +
+                '}';
     }
 }

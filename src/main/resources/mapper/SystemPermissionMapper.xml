@@ -6,6 +6,7 @@
     <result column="permissionValue" jdbcType="VARCHAR" property="permissionvalue" />
     <result column="permissionModule" jdbcType="VARCHAR" property="permissionmodule" />
     <result column="permissionName" jdbcType="VARCHAR" property="permissionname" />
+    <result column="roleID" jdbcType="INTEGER" property="roleID"/>
     <result column="permissionLastUpdateTime" jdbcType="TIMESTAMP" property="permissionlastupdatetime" />
   </resultMap>
   <sql id="Base_Column_List">
@@ -97,12 +98,12 @@
           SELECT permissionValue FROM permissiontb
     </select>
 
-  <insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="permissionId">
+  <insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="permissionid">
 
     INSERT INTO permissiontb(permissionValue,permissionModule,permissionName) VALUES
 
     <foreach collection="list" item="permission" separator=",">
-      (#{permission.permissionValue},#{permission.permissionModule},#{permission.permissionName})
+      (#{permission.permissionvalue},#{permission.permissionmodule},#{permission.permissionname})
     </foreach>
 
   </insert>
@@ -113,10 +114,28 @@
 
     <foreach collection="list" item="per" separator=",">
 
-      (1,#{per.permissionId})
+      (1,#{per.permissionid})
 
     </foreach>
 
+  </insert>
+
+  <select id="selectPermission" resultMap="BaseResultMap">
+    select * from permissiontb
+  </select>
+
+  <select id="selectPermissionModule" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select p.*, r.roleId as roleID from permissiontb p left join rolepermissiontb r
+    on p.permissionId = r.permissionId and r.roleId = #{role}
+    order by p.permissionModule
+  </select>
+
+  <select id="selectPermissionForModule" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from permissiontb where permissionModule like #{module}
+  </select>
+
+  <insert id="insertRoleGetPermission" >
+    insert into rolepermissiontb (roleId, permissionId) values (#{role},#{pId})
   </insert>
 
 </mapper>
