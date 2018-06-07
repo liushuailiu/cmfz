@@ -1,6 +1,8 @@
 package com.fly.dao;
 
 import com.fly.pojo.SystemModule;
+import com.fly.util.Page;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -24,4 +26,11 @@ public interface SystemModuleMapper {
 
     List<SystemModule> selectSystemModule();
 
+    List<SystemModule> selectSystemModuleByRoleId(Integer role);
+
+    Integer deleteRoleModuleByModuleAndRole(@Param("module") Integer module, @Param("role") Integer role);
+
+    List<SystemModule> selectSystemModuleByNotRoleId(Integer role);
+
+    Integer insertRoleModule(@Param("module") Integer[] module, @Param("role") Integer role);
 }

@@ -21,4 +21,8 @@ public class Page {
         this.code = code;
         this.msg = msg;
     }
+
+    public Page(Integer code) {
+        this.code = code;
+    }
 }

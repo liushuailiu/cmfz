@@ -113,16 +113,16 @@
         </property>
     </bean>
 
-    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+    <!--<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">-->
 
-        <property name="exceptionMappings">
-            <props>
-                <prop key="java.lang.Exception">redirect:/404.html</prop>
-                <prop key="com.fly.util.exception.NoPermissionException">redirect:/login.html</prop>
-            </props>
-        </property>
+        <!--<property name="exceptionMappings">-->
+            <!--<props>-->
+                <!--<prop key="java.lang.Exception">redirect:/404.html</prop>-->
+                <!--<prop key="com.fly.util.exception.NoPermissionException">redirect:/login.html</prop>-->
+            <!--</props>-->
+        <!--</property>-->
 
-    </bean>
+    <!--</bean>-->
 
 
     <aop:config>

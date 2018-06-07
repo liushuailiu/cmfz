@@ -35,4 +35,8 @@ public class UserService {
     public List<Integer> getUserRolesIDByUserId(Integer userid) {
         return systemUserMapper.getUserRolesIDByUserId(userid);
     }
+
+    public List<Integer> getModuleByRoles(List<Integer> roles) {
+        return null;
+    }
 }

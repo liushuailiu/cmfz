@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../../js/layui/layui.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="../../js/layui/css/layui.css" media="all">
+    <link rel="stylesheet" type="text/css" href="../../js/zTree/css/zTreeStyle/zTreeStyle.css"/>
+    <link rel="stylesheet" type="text/css" href="../../js/zTree/css/demo.css"/>
+    <script type="text/javascript" src="../../js/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/zTree/js/jquery.ztree.core.js"></script>
+    <script src="../../js/zTree/js/jquery.ztree.excheck.min.js"></script>
+    <script type="text/javascript" src="../../js/crm.js"></script>
+</head>
+<body>
+
+<h1>谨慎操作!!!切记切记!!!</h1>
+
+<div style="padding: 20px">
+
+    <div style="float: left">
+        <ul id="treeDemo_0" class="ztree"></ul>
+    </div>
+    <div style="float: left;margin-left: 150px;margin-right: 150px">
+        <input type="button" value="添加模块" onclick="appendModule()"/>
+    </div>
+    <div style="float: left">
+        <ul id="treeDemo_1" class="ztree"></ul>
+    </div>
+
+</div>
+
+<script>
+    var zTreeObjNot = null;
+    $(function () {
+
+        // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
+        var setting = {
+            check: {
+                enable: true,
+                chkStyle: "checkbox",
+                chkboxType: {"Y": "s", "N": "s"}
+            },
+            data: { //数据配置
+                key: {
+                    name: "modulename"
+                },
+                simpleData: { //简单数据模式
+                    enable: true, //是否启用简单数据模式
+                    idKey: "moduleid", //设置节点id属性名
+                    pIdKey: "parentid", //设置父节点属性名
+                    rootPId: 0 //设置根节点，默认值null
+                }
+            }
+        };
+        $.post("/module/not/" + JSON.parse(sessionStorage.getItem("DATA")).roleid, {},
+            function (res) {
+                zTreeObjNot = $.fn.zTree.init($("#treeDemo_0"), setting, res);
+                zTreeObjNot.expandAll(true);
+            }, "json");
+
+    });
+
+    function appendModule() {
+        if (zTreeObjNot == null) {
+            return;
+        }
+        var noods = zTreeObjNot.getCheckedNodes(true);
+        if (noods.length < 1) {
+            return;
+        }
+        var myArray = new Array();
+        for (var i in noods) {
+            myArray.push(noods[i].moduleid);
+        }
+
+        let params = {
+            "token": crm.getToken(),
+            "module": myArray.toString(),
+            "role": JSON.parse(sessionStorage.getItem("DATA")).roleid
+        };
+
+        layui.use('layer', function () {
+            var layer = layui.layer;
+            $.post("/module/append", params, function (result) {
+                if (result.code == 200) {
+                   window.location.reload();
+                } else {
+                    layer.msg("模块添加失败,请稍后重试!!!");
+                }
+            },"json");
+        });
+    }
+
+    $(function () {
+        var zTreeObj;
+        // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
+        var setting = {
+            data: { //数据配置
+                key: {
+                    name: "modulename"
+                },
+                simpleData: { //简单数据模式
+                    enable: true, //是否启用简单数据模式
+                    idKey: "moduleid", //设置节点id属性名
+                    pIdKey: "parentid", //设置父节点属性名
+                    rootPId: 0 //设置根节点，默认值null
+                }
+            }
+        };
+        $.post("/module/" + JSON.parse(sessionStorage.getItem("DATA")).roleid, {
+            "roles": crm.getRoles()
+        }, function (res) {
+            zTreeObj = $.fn.zTree.init($("#treeDemo_1"), setting, res);
+            zTreeObj.expandAll(true);
+        }, "json");
+
+    });
+</script>
+
+</body>
+</html>

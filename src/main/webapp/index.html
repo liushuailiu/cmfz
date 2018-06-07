@@ -67,6 +67,11 @@
         var zTreeObj;
         // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
         var setting = {
+            check: {
+                enable: true,
+                chkStyle: "checkbox",
+                chkboxType: { "Y": "s", "N": "s" }
+            },
             data: { //数据配置
                 key: {
                     name: "modulename"
@@ -84,23 +89,13 @@
                 }
             }
         };
-        $.post("module/queryModule", {
+        $.post("/module/queryModule", {
             "roles": crm.getRoles(),
             "token": crm.getToken()
         }, function (res) {
             zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, res);
             zTreeObj.expandAll(true);
         }, "json");
-
-        // $("#tt").tabs(
-        //     'add', {
-        //         title: '主页',
-        //         closable: true,
-        //         border: true,
-        //         content: "<iframe width='100%' height='100%' src='content.html'></iframe>",
-        //         fit: true
-        //     }
-        // );
 
     });
 

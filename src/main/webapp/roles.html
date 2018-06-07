@@ -20,27 +20,24 @@
 
 <!--</div>-->
 
-<div class="layui-btn-group demoTable">
-    <button class="layui-btn" data-type="add_module">添加模块</button>
+<!--<div class="layui-btn-group demoTable">-->
 <!--<button class="layui-btn" data-type="getCheckData">获取选中行数据</button>-->
 <!--<button class="layui-btn" data-type="getCheckLength">获取选中数目</button>-->
 <!--<button class="layui-btn" data-type="isAll">验证是否全选</button>-->
-</div>
+<!--</div>-->
 
 <table class="layui-table"
-       lay-data="{url:'/module/query', page:true, id:'idTest'}"
-       lay-filter="demo">
+       lay-data="{url:'/roles/query', page:true, id:'idTest'}" lay-filter="demo">
     <thead>
     <tr>
+
         <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
-        <th lay-data="{field:'moduleid', width:80, sort: true, fixed: true, align:'center'}">模块ID</th>
-        <th lay-data="{field:'modulename', width:200, align:'center'}">模块名称</th>
-        <th lay-data="{field:'modulelastupdatetime', width:200, sort: true, align:'center'}">最后修改时间</th>
-        <th lay-data="{field:'parentid',  sort: true , width:150, align:'center'}">所属模块ID</th>
-        <th lay-data="{field:'parentName', width:160, align:'center'}">所属模块名称</th>
-        <th lay-data="{field:'moduleurl', width:200, align:'center'}">模块路径</th>
-        <th lay-data="{field:'moduleweight', width:80}">权重</th>
-        <th lay-data="{fixed: 'right', width:178, align:'center', toolbar: '#barDemo'}"></th>
+        <th lay-data="{field:'roleid', width:80, sort: true, fixed: true, align:'center'}">角色ID</th>
+        <th lay-data="{field:'rolename', width:200, align:'center'}">角色名称</th>
+        <th lay-data="{field:'rolelastupdatetime', width:200, sort: true, align:'center'}">角色修改时间</th>
+        <th lay-data="{field:'roleexplain', width:200, align:'center'}">角色描述</th>
+        <!--<th lay-data="{field:'moduleweight', width:80}">权重</th>-->
+        <th lay-data="{fixed: 'right', width:330, align:'center', toolbar: '#barDemo'}"></th>
     </tr>
     </thead>
 </table>
@@ -49,11 +46,10 @@
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="module">已拥有模块</a>
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="distribution">分配模块</a>
 </script>
 
-
-<!--<script src="//res.layui.com/layui/dist/layui.js" ></script>-->
-<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
     layui.use('table', function () {
         var table = layui.table;
@@ -99,11 +95,37 @@
                 layer.open({
                     title: data.modulename + '编辑',
                     type: 2,
+                    // content: 'http://www.baidu.com',
                     content: '/admin/module/moduleUpdate.html',
                     area: ['700px', '300px'],
                     end: function () {
                         table.reload('idTest', {
                             url: '/module/query'
+                        });
+                    }
+                });
+
+            } else if(obj.event === 'module'){
+                layer.open({
+                    title: data.rolename + '负责模块',
+                    type: 2,
+                    content: '/admin/role/roleModule.html',
+                    area: ['900px', '500px'],
+                    end: function () {
+                        table.reload('idTest', {
+                            url: '/roles/query'
+                        });
+                    }
+                });
+            } else if(obj.event === 'distribution'){
+                layer.open({
+                    title: data.rolename + '分配模块',
+                    type: 2,
+                    content: '/admin/role/rolesDistribution.html',
+                    area: ['900px', '500px'],
+                    end: function () {
+                        table.reload('idTest', {
+                            url: '/roles/query'
                         });
                     }
                 });
@@ -124,20 +146,6 @@
             , isAll: function () { //验证是否全选
                 var checkStatus = table.checkStatus('idTest');
                 layer.msg(checkStatus.isAll ? '全选' : '未全选')
-            }
-            , add_module: function () {
-                layer.open({
-                    title: '添加模块',
-                    type: 2,
-                    // content: 'http://www.baidu.com',
-                    content: '/admin/module/moduleAdd.html',
-                    area: ['700px', '300px'],
-                    end: function () {
-                        table.reload('idTest', {
-                            url: '/module/query'
-                        });
-                    }
-                });
             }
         };
 

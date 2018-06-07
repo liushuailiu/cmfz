@@ -40,11 +40,13 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 
+    <mvc:resources location="/js/" mapping="/js/**"/>
+    <mvc:resources location="/admin/**" mapping="/admin/"/>
     <!--拦截器配置-->
 
-    <!--<mvc:interceptors>-->
+    <mvc:interceptors>
         <!--<bean class="com.fly.auth.LoginInterceptor"/>-->
-        <!--<bean class="com.fly.auth.EncodingInterceptor"/>-->
-    <!--</mvc:interceptors>-->
+        <bean class="com.fly.auth.EncodingInterceptor"/>
+    </mvc:interceptors>
 
 </beans>

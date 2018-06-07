@@ -20,9 +20,7 @@ public class ModuleService {
 
     @SystemLogAnnotation(describe = SystemLogProperties.MODULE_ROLES_USER)
     public List<SystemModule> queryModuleTree(Integer[] roles) {
-
         return moduleMapper.queryModuleTreeByRoleID(roles);
-
     }
 
     /**
@@ -46,9 +44,61 @@ public class ModuleService {
         return page;
     }
 
-    public Page deleteModuleByModuleId(Integer id) {
-        Integer count = moduleMapper.deleteByPrimaryKey(id);
+    /**
+     * 维护角色与模块的关系,删除指定角色下的某个模块
+     * @param module 模块ID
+     * @param role   角色ID
+     * @return
+     */
+    public Page deleteModuleByModuleId(Integer module, Integer role) {
+        Integer count = moduleMapper.deleteRoleModuleByModuleAndRole(module,role);
         Page page = count<=0 ? new Page(500,"删除失败"):new Page(200,"删除成功");
+        return page;
+    }
+
+
+    public Page insertModule(SystemModule systemModule) {
+
+         Page page = moduleMapper.insertSelective(systemModule)<1 ? new Page(500,"添加失败") : new Page(200,"添加成功");
+         return page;
+
+    }
+
+    /**
+     * 查询角色下的所有模块
+     * @param role  角色ID
+     * @param page  第几页
+     * @param limit 每页显示几条
+     * @return 页面集合
+     */
+    public Page queryModuleByRoleId(Integer role, Integer page, Integer limit) {
+
+        PageHelper.startPage(page,limit);
+        List<SystemModule> modules = moduleMapper.selectSystemModuleByRoleId(role);
+        PageInfo pageInfo = new PageInfo(modules);
+        Page pages = new Page(pageInfo);
+        return pages;
+
+    }
+
+    /**
+     * 查询所有模块,用Tree来显示
+     * @return
+     */
+    public List<SystemModule> queryModuleAll() {
+        return moduleMapper.selectSystemModule();
+    }
+
+    public List<SystemModule> queryModuleByRoleId(Integer role) {
+        return moduleMapper.selectSystemModuleByRoleId(role);
+    }
+
+    public List<SystemModule> queryModuleByNotRoleId(Integer role) {
+        return moduleMapper.selectSystemModuleByNotRoleId(role);
+    }
+
+    public Page updateRoleModuleAppend(Integer[] module, Integer role) {
+        Page page =  moduleMapper.insertRoleModule(module,role)>0 ? new Page(200) : new Page(500);
         return page;
     }
 }
