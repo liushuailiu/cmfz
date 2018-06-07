@@ -30,7 +30,7 @@ public class FileController {
                 httpHeaders,HttpStatus.OK);
     }
 
-    @PostMapping(value = "/uploads",name = "上传权限")
+    @PostMapping(value = "/uploads",name = "上传多个文件权限")
     public String uploads(@RequestParam MultipartFile[] files) throws IOException {
         String name = "";
         if(files!=null && files.length>0){
@@ -56,7 +56,7 @@ public class FileController {
         return "ok";
     }
 
-    @PostMapping(value = "/upload")
+    @PostMapping(value = "/upload",name = "上传单个文件权限")
     public String upload(@RequestParam MultipartFile file) throws IOException {
         String name = "";
 

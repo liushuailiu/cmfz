@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @RestController
-@RequestMapping(value = "/login",name = "登录")
+@RequestMapping(value = "/login")
 
 public class LoginController {
 
@@ -30,7 +30,7 @@ public class LoginController {
     private RedisTemplate redisTemplate;
 
     //用户登录操作
-    @PostMapping("/confirm")
+    @PostMapping(value = "/confirm")
     public Object confirm(String name,String pass){
 
         SystemUser systemUser = userService.loginUser(name,pass);

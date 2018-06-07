@@ -13,7 +13,6 @@
     <sql id="Base_Column_List">
     moduleId, parentId, moduleName, moduleWeight, moduleUrl, moduleCreateTime, moduleLastUpdateTime
   </sql>
-
     <select id="selectSystemModule" resultMap="BaseResultMap">
       select m.*,t.moduleName as parentName from moduletb m left join moduletb t
       on m.parentId = t.moduleId order by m.moduleWeight

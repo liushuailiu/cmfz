@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fly.dao.SystemPermissionMapper">
+  <resultMap id="BaseResultMap" type="com.fly.pojo.SystemPermission">
+    <id column="permissionId" jdbcType="INTEGER" property="permissionid" />
+    <result column="permissionValue" jdbcType="VARCHAR" property="permissionvalue" />
+    <result column="permissionModule" jdbcType="VARCHAR" property="permissionmodule" />
+    <result column="permissionName" jdbcType="VARCHAR" property="permissionname" />
+    <result column="permissionLastUpdateTime" jdbcType="TIMESTAMP" property="permissionlastupdatetime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    permissionId, permissionValue, permissionModule, permissionName, permissionLastUpdateTime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from permissiontb
+    where permissionId = #{permissionid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from permissiontb
+    where permissionId = #{permissionid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.fly.pojo.SystemPermission">
+    insert into permissiontb (permissionId, permissionValue, permissionModule, 
+      permissionName, permissionLastUpdateTime
+      )
+    values (#{permissionid,jdbcType=INTEGER}, #{permissionvalue,jdbcType=VARCHAR}, #{permissionmodule,jdbcType=VARCHAR}, 
+      #{permissionname,jdbcType=VARCHAR}, #{permissionlastupdatetime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fly.pojo.SystemPermission">
+    insert into permissiontb
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="permissionid != null">
+        permissionId,
+      </if>
+      <if test="permissionvalue != null">
+        permissionValue,
+      </if>
+      <if test="permissionmodule != null">
+        permissionModule,
+      </if>
+      <if test="permissionname != null">
+        permissionName,
+      </if>
+      <if test="permissionlastupdatetime != null">
+        permissionLastUpdateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="permissionid != null">
+        #{permissionid,jdbcType=INTEGER},
+      </if>
+      <if test="permissionvalue != null">
+        #{permissionvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionmodule != null">
+        #{permissionmodule,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionname != null">
+        #{permissionname,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionlastupdatetime != null">
+        #{permissionlastupdatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fly.pojo.SystemPermission">
+    update permissiontb
+    <set>
+      <if test="permissionvalue != null">
+        permissionValue = #{permissionvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionmodule != null">
+        permissionModule = #{permissionmodule,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionname != null">
+        permissionName = #{permissionname,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionlastupdatetime != null">
+        permissionLastUpdateTime = #{permissionlastupdatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where permissionId = #{permissionid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fly.pojo.SystemPermission">
+    update permissiontb
+    set permissionValue = #{permissionvalue,jdbcType=VARCHAR},
+      permissionModule = #{permissionmodule,jdbcType=VARCHAR},
+      permissionName = #{permissionname,jdbcType=VARCHAR},
+      permissionLastUpdateTime = #{permissionlastupdatetime,jdbcType=TIMESTAMP}
+    where permissionId = #{permissionid,jdbcType=INTEGER}
+  </update>
+
+  <select id="queryAll" resultType="java.lang.String">
+          SELECT permissionValue FROM permissiontb
+    </select>
+
+  <insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="permissionId">
+
+    INSERT INTO permissiontb(permissionValue,permissionModule,permissionName) VALUES
+
+    <foreach collection="list" item="permission" separator=",">
+      (#{permission.permissionValue},#{permission.permissionModule},#{permission.permissionName})
+    </foreach>
+
+  </insert>
+
+  <insert id="batchInsertRolePermission" parameterType="java.util.List">
+
+    insert into rolepermissiontb (roleId, permissionId) values
+
+    <foreach collection="list" item="per" separator=",">
+
+      (1,#{per.permissionId})
+
+    </foreach>
+
+  </insert>
+
+</mapper>

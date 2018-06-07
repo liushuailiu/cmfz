@@ -13,7 +13,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/module")
+@RequestMapping(value = "/module",name = "模块系统")
 public class ModuleController {
 
     @Autowired
@@ -32,15 +32,15 @@ public class ModuleController {
     }
 
     /**
-     * 查询所有模块,配合前端模块修改的树
+     * 查询所有模块,返回一颗Tree,模块动态添加
      * @return
      */
-    @PostMapping(value = "/queryAll")
+    @PostMapping(value = "/queryAll",name = "查询所有模块")
     public List<SystemModule> queryModule(){
         return moduleService.queryModuleAll();
     }
 
-    @GetMapping(value = "/query",name = "查询所有模块")
+    @GetMapping(value = "/query",name = "分页查询所有模块")
     public Object queryModule(Integer page ,Integer limit){
         return moduleService.queryModuleAll(page,limit);
     }
@@ -56,7 +56,7 @@ public class ModuleController {
      * @param role  角色ID
      * @return
      */
-    @DeleteMapping("/{module}/{role}")
+    @DeleteMapping(value = "/{module}/{role}",name = "删除角色的某一个模块")
     public Page deleteModule(@PathVariable("module") Integer module, @PathVariable("role") Integer role){
         return moduleService.deleteModuleByModuleId(module,role);
     }
@@ -66,7 +66,7 @@ public class ModuleController {
      * @param role
      * @return
      */
-    @PostMapping("/{role}")
+    @PostMapping(value = "/{role}",name = "查询角色对应模块")
     public List<SystemModule> queryModuleByRole(@PathVariable("role") Integer role){
         return moduleService.queryModuleByRoleId(role);
     }
@@ -76,7 +76,7 @@ public class ModuleController {
      * @param role
      * @return
      */
-    @PostMapping("/not/{role}")
+    @PostMapping(value = "/not/{role}",name = "查询模块目前没有的角色")
     public List<SystemModule> queryModuleByNotRole(@PathVariable("role") Integer role){
         return moduleService.queryModuleByNotRoleId(role);
     }
@@ -91,7 +91,7 @@ public class ModuleController {
      * 查询指定角色下的所有模块
      * @return
      */
-    @PostMapping(value = "/query/{role}")
+    @PostMapping(value = "/query/{role}",name = "分页查询角色对应模块")
     public Page queryModuleByRoleId(@PathVariable("role") Integer role,Integer page,Integer limit){
         return moduleService.queryModuleByRoleId(role,page,limit);
     }
