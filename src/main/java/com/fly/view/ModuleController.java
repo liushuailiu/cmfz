@@ -13,7 +13,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/module",name = "模块系统")
+@RequestMapping(value = "/module",name = "模块管理")
 public class ModuleController {
 
     @Autowired
@@ -57,8 +57,13 @@ public class ModuleController {
      * @return
      */
     @DeleteMapping(value = "/{module}/{role}",name = "删除角色的某一个模块")
-    public Page deleteModule(@PathVariable("module") Integer module, @PathVariable("role") Integer role){
+    public Page deleteModuleByRole(@PathVariable("module") Integer module, @PathVariable("role") Integer role){
         return moduleService.deleteModuleByModuleId(module,role);
+    }
+
+    @DeleteMapping(value = "/{module}",name = "删除角色的某一个模块")
+    public Page deleteModuleById(@PathVariable("module") Integer module){
+        return moduleService.deleteModuleByModuleId(module);
     }
 
     /**
@@ -81,6 +86,11 @@ public class ModuleController {
         return moduleService.queryModuleByNotRoleId(role);
     }
 
+    /**
+     * 添加模块
+     * @param systemModule
+     * @return
+     */
     @PostMapping(value = "/add",name = "添加模块")
     public Page insertModule(SystemModule systemModule){
         systemModule.setModulecreatetime(new Date());

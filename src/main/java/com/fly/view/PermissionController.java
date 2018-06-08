@@ -4,21 +4,14 @@ import com.fly.pojo.SystemPermission;
 import com.fly.service.SystemPermissionService;
 import com.fly.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
-@RequestMapping(value = "/system",name = "系统模块")
+@RequestMapping(value = "/system",name = "权限管理")
 public class PermissionController {
 
     @Autowired
@@ -30,15 +23,35 @@ public class PermissionController {
     /**
      * 查询拥有模块的所有权限
      * @return
+     *  id: demoReload_1.val(),
+     *  module: demoReload_2.val(),
+     *  name: demoReload_3.val()
      */
-    @GetMapping(value = "/queryModule",name = "查询拥有权限的模块")
-    public Page queryModuleByPermission(Integer role,Integer page,Integer limit){
-        return systemPermissionService.selectPermissionModule(role,page,limit);
+    @PostMapping(value = "/queryModule",name = "查询拥有权限的模块")
+    public Page queryModuleByPermission(Integer role, Integer page, Integer limit,
+                                        @RequestParam(value = "id",required = false) Integer module_id,
+                                        @RequestParam(value = "module",required = false) String module_name,
+                                        @RequestParam(value = "name",required = false) String permission_name){
+
+        return systemPermissionService.selectPermissionModule(role,page,limit,module_id,module_name,permission_name);
     }
+
+//    @GetMapping(value = "/query",name = "按条件查询拥有权限的模块")
+//    public Page queryModuleByPermissionAndOther(Integer role, Integer page, Integer limit,KeyUtils keyUtils){
+//        System.out.println(keyUtils.toString());
+//        return systemPermissionService.selectPermissionModule(role,page,limit);
+//    }
 
     @PostMapping(value = "/get",name = "给角色分配权限")
     public Page updateRoleGetPermission(Integer Role, Integer pId){
         return systemPermissionService.updateRoleGetPermission(Role,pId);
+    }
+
+//    lost
+
+    @PostMapping(value = "/lost",name = "回收角色权限")
+    public Page updateRoleLostPermission(Integer Role, Integer pId){
+        return systemPermissionService.updateRoleLostPermission(Role,pId);
     }
 
     /**

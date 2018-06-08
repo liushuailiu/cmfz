@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/mail",name = "邮件系统")
+@RequestMapping(value = "/mail",name = "邮件管理")
 @CrossOrigin
 public class EmailController {
 

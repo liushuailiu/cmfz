@@ -46,7 +46,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">模块路径</label>
         <div class="layui-input-block">
-            <input type="text" name="moduleurl" lay-verify="title" autocomplete="off" placeholder="请输入模块路径"
+            <input type="text" name="moduleurl" autocomplete="off" placeholder="请输入模块路径"
                    class="layui-input">
         </div>
     </div>
@@ -128,9 +128,9 @@
 
         //监听提交
         form.on('submit(demo1)', function (data) {
-            // var index = layer.load();
+            var index = layer.load();
             $.post("/module/add", data.field, function (res) {
-                // layer.close(index);
+                layer.close(index);
                 if (res.code == 200) {
                     layer.msg('添加成功',{time: 2000 },
                         function () {

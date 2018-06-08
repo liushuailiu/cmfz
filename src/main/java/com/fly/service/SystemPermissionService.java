@@ -38,10 +38,10 @@ public class SystemPermissionService  {
         return new Page(pageInfo);
     }
 
-    public Page selectPermissionModule(Integer role, Integer page, Integer limit) {
+    public Page selectPermissionModule(Integer role, Integer page, Integer limit, Integer module_id, String module_name, String permission_name) {
 
         PageHelper.startPage(page,limit);
-        List<SystemPermission> list = permissionMapper.selectPermissionModule(role);
+        List<SystemPermission> list = permissionMapper.selectPermissionModule(role,module_id,module_name,permission_name);
         for (SystemPermission s:list) {
             if(s.getRoleID()==null){
                 s.setRoleID(Integer.MIN_VALUE);
@@ -60,6 +60,12 @@ public class SystemPermissionService  {
 
     public Page updateRoleGetPermission(Integer role, Integer pId) {
         Integer count = permissionMapper.insertRoleGetPermission(role,pId);
+        Page page = count<=0 ? new Page(500):new Page(200);
+        return page;
+    }
+
+    public Page updateRoleLostPermission(Integer role, Integer pId) {
+        Integer count = permissionMapper.insertRoleLostPermission(role,pId);
         Page page = count<=0 ? new Page(500):new Page(200);
         return page;
     }

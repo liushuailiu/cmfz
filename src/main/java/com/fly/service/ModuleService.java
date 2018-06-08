@@ -59,7 +59,10 @@ public class ModuleService {
 
     public Page insertModule(SystemModule systemModule) {
 
-         Page page = moduleMapper.insertSelective(systemModule)<1 ? new Page(500,"添加失败") : new Page(200,"添加成功");
+         moduleMapper.insertSelective(systemModule);
+
+         Integer count = moduleMapper.insertAdminAppendModule(systemModule.getModuleid());
+         Page page = count<=0 ? new Page(500):new Page(200);
          return page;
 
     }
@@ -101,4 +104,11 @@ public class ModuleService {
         Page page =  moduleMapper.insertRoleModule(module,role)>0 ? new Page(200) : new Page(500);
         return page;
     }
+
+    public Page deleteModuleByModuleId(Integer module) {
+        Integer count = moduleMapper.deleteByPrimaryKey(module);
+        Page page = count<=0 ? new Page(500,"删除失败"):new Page(200,"删除成功");
+        return page;
+    }
+
 }

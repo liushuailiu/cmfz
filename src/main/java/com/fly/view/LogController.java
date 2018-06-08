@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping(value = "/log",name = "日志系统")
+@RequestMapping(value = "/log",name = "日志管理")
 public class LogController {
 
     @Autowired

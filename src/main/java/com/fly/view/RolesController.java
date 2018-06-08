@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/roles",name = "角色模块")
+@RequestMapping(value = "/roles",name = "角色管理")
 public class RolesController {
 
     @Autowired

@@ -33,4 +33,6 @@ public interface SystemModuleMapper {
     List<SystemModule> selectSystemModuleByNotRoleId(Integer role);
 
     Integer insertRoleModule(@Param("module") Integer[] module, @Param("role") Integer role);
+
+    Integer insertAdminAppendModule(Integer moduleid);
 }

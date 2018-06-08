@@ -14,7 +14,7 @@ import java.io.IOException;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/file",name = "文件系统")
+@RequestMapping(value = "/file",name = "文件管理")
 public class FileController {
 
     private static final String path = "E:/image/" + FileUtils.getDate() + "/";

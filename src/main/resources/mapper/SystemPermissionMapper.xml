@@ -118,6 +118,7 @@
 
     </foreach>
 
+
   </insert>
 
   <select id="selectPermission" resultMap="BaseResultMap">
@@ -127,7 +128,8 @@
   <select id="selectPermissionModule" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select p.*, r.roleId as roleID from permissiontb p left join rolepermissiontb r
     on p.permissionId = r.permissionId and r.roleId = #{role}
-    order by p.permissionModule
+      order by p.permissionModule
+
   </select>
 
   <select id="selectPermissionForModule" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -138,4 +140,22 @@
     insert into rolepermissiontb (roleId, permissionId) values (#{role},#{pId})
   </insert>
 
+  <delete id="insertRoleLostPermission">
+    delete from rolepermissiontb where roleId = #{role} and permissionId = #{pId}
+  </delete>
+
 </mapper>
+
+        <!--<where>-->
+
+        <!--<if test=" module_id != null ">-->
+        <!--p.permissionId = #{module_id}-->
+        <!--</if>-->
+        <!--<if test=" module_name != null ">-->
+        <!--and p.permissionModule = #{module_name}-->
+        <!--</if>-->
+        <!--<if test=" permission_name != null ">-->
+        <!--and p.permissionName = #{permission_name}-->
+        <!--</if>-->
+
+        <!--</where>-->

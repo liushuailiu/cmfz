@@ -27,10 +27,13 @@
     <div class="layui-inline">
         <input class="layui-input" name="id" id="demoReload_3" autocomplete="off">
     </div>
-    <input class="layui-btn" value="搜索" onclick="loadTable()"/>
+
+    <button class="layui-btn" data-type="reload">搜索</button>
+
 </div>
 
 <table class="layui-hide" id="LAY_table_user" lay-filter="user"></table>
+
 <script type="text/html" id="barDemo">
     {{#  if(d.roleID === -2147483648){ }}
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">未分配</a>
@@ -38,8 +41,11 @@
     <a class="layui-btn layui-btn-xs" lay-event="edit">已分配</a>
     {{#  }                   }}
 </script>
+
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
+
+
 
     layui.use('table', function () {
 
@@ -60,9 +66,10 @@
             , id: 'testReload'
             , page: true
             , height: 500
+            ,method:'post'
         });
 
-        table.on('tool(user)', function(obj) {
+        table.on('tool(user)', function (obj) {
 
 
             //data是每行数据组成的js对象
@@ -72,18 +79,49 @@
 
             //分配权限
             if (obj.event === 'del') {
-                $.post("/system/get",{Role:role.roleid,pId:data.permissionid},function (result) {
-                    if(result.code == 200) {
+                $.post("/system/get", {Role: role.roleid, pId: data.permissionid}, function (result) {
+                    if (result.code == 200) {
                         layer.msg("权限分配成功");
                         loadTable();
-                    }else {
+                    } else {
                         layer.msg("系统繁忙!!!");
                     }
-                },"json");
+                }, "json");
+            }else if(obj.event === 'edit'){
+                $.post("/system/lost", {Role: role.roleid, pId: data.permissionid}, function (result) {
+                    if (result.code == 200) {
+                        layer.msg("权限回收成功");
+                        loadTable();
+                    } else {
+                        layer.msg("系统繁忙!!!");
+                    }
+                }, "json");
             }
         });
 
-        function loadTable(){
+        var $ = layui.$, active = {
+            reload: function () {
+                var demoReload_1 = $('#demoReload_1');
+                var demoReload_2 = $('#demoReload_2');
+                var demoReload_3 = $('#demoReload_3');
+
+                //执行重载
+                table.reload('testReload', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    , where: {
+
+                            id: demoReload_1.val(),
+                            module: demoReload_2.val(),
+                            name: demoReload_3.val()
+
+                    }
+                });
+            }
+        };
+
+        function loadTable() {
             var demoReload_1 = $('#demoReload_1');
             var demoReload_2 = $('#demoReload_2');
             var demoReload_3 = $('#demoReload_3');
@@ -92,11 +130,11 @@
                     curr: 1 //重新从第 1 页开始
                 }
                 , where: {
-                    key: {
+
                         id: demoReload_1.val(),
                         module: demoReload_2.val(),
                         name: demoReload_3.val()
-                    }
+
                 }
             });
         }
@@ -105,6 +143,7 @@
             var type = $(this).data('type');
             active[type] ? active[type].call(this) : '';
         });
+
     });
 </script>
 

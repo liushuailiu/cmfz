@@ -35,9 +35,15 @@ public interface SystemPermissionMapper {
 
     List<SystemPermission> selectPermission();
 
-    List<SystemPermission> selectPermissionModule(Integer role);
+    List<SystemPermission> selectPermissionModule(@Param("role") Integer role,
+                                                  @Param("module_id")Integer module_id,
+                                                  @Param("module_name")String module_name,
+                                                  @Param("permission_name")String permission_name);
 
     List<SystemPermission> selectPermissionForModule(String module);
 
     Integer insertRoleGetPermission(@Param("role") Integer role, @Param("pId") Integer pId);
+
+    Integer insertRoleLostPermission(@Param("role") Integer role, @Param("pId") Integer pId);
+
 }

@@ -4,6 +4,7 @@
     <resultMap id="BaseResultMap" type="com.fly.pojo.SystemModule">
         <id column="moduleId" jdbcType="INTEGER" property="moduleid"/>
         <result column="parentId" jdbcType="INTEGER" property="parentid"/>
+        <result column="parentName" jdbcType="VARCHAR" property="parentName"/>
         <result column="moduleName" jdbcType="VARCHAR" property="modulename"/>
         <result column="moduleWeight" jdbcType="INTEGER" property="moduleweight"/>
         <result column="moduleUrl" jdbcType="VARCHAR" property="moduleurl"/>
@@ -14,8 +15,10 @@
     moduleId, parentId, moduleName, moduleWeight, moduleUrl, moduleCreateTime, moduleLastUpdateTime
   </sql>
     <select id="selectSystemModule" resultMap="BaseResultMap">
+
       select m.*,t.moduleName as parentName from moduletb m left join moduletb t
       on m.parentId = t.moduleId order by m.moduleWeight
+
   </select>
 
     <insert id="insertRoleModule">
@@ -24,6 +27,7 @@
             (#{role},#{module_id})
         </foreach>
     </insert>
+
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
@@ -43,7 +47,10 @@
       #{moduleweight,jdbcType=INTEGER}, #{moduleurl,jdbcType=VARCHAR}, #{modulecreatetime,jdbcType=TIMESTAMP}, 
       #{modulelastupdatetime,jdbcType=TIMESTAMP})
   </insert>
-    <insert id="insertSelective" parameterType="com.fly.pojo.SystemModule">
+
+
+
+    <insert id="insertSelective" parameterType="com.fly.pojo.SystemModule" useGeneratedKeys="true" keyProperty="moduleid">
         insert into moduletb
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="moduleid != null">
@@ -157,5 +164,9 @@
     <delete id="deleteRoleModuleByModuleAndRole">
         delete from rolemoduletb where moduleId = #{module} and roleId = #{role}
     </delete>
+
+    <insert id="insertAdminAppendModule" parameterType="java.lang.Integer">
+        insert into rolemoduletb (roleId, moduleId) values (1 , #{moduleid})
+    </insert>
 
 </mapper>
