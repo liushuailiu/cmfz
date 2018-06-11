@@ -34,6 +34,20 @@
         from usertb
         where userId = #{userid,jdbcType=INTEGER}
     </select>
+
+    <select id="selectUser" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from usertb
+        <where>
+            <if test=" username != null and username.length()>0 ">
+                  username like "%"#{username}"%"
+            </if>
+        </where>
+    </select>
+
+
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from usertb
     where userId = #{userid,jdbcType=INTEGER}

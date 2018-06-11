@@ -4,12 +4,14 @@ import com.fly.auth.JsonWebToken;
 import com.fly.auth.Token;
 import com.fly.pojo.SystemUser;
 import com.fly.service.UserService;
+import com.fly.util.Page;
 import com.fly.util.system.SystemResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
@@ -28,6 +30,26 @@ public class LoginController {
 
     @Autowired
     private RedisTemplate redisTemplate;
+
+
+    /**
+     * 查询用户拥有以及未拥有的角色
+     * @return
+     */
+    @PostMapping("/queryRole")
+    public Page queryUserRoles(Integer page , Integer limit , @RequestParam("user") Integer userId , @RequestParam(value = "username",required = false) String name){
+        return userService.queryUserRoles(page , limit , userId , name);
+    }
+
+    /**
+     * 查询目前存在于系统中的所有用户
+     * @return
+     */
+    @PostMapping("/query")
+    public Page queryUser(Integer page, Integer limit, @RequestParam(value = "username" ,required = false) String username){
+        return userService.queryUser(page,limit,username);
+    }
+
 
     //用户登录操作
     @PostMapping(value = "/confirm")

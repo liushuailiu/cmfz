@@ -15,17 +15,17 @@
 <body>
 
 <div class="demoTable">
-    权限ID：
+    角色名称 ：
     <div class="layui-inline">
-        <input class="layui-input" name="id" id="demoReload_1" autocomplete="off">
+        <input class="layui-input" name="username" id="demoReload_1" autocomplete="off">
     </div>
-    权限模块：
     <div class="layui-inline">
-        <input class="layui-input" name="id" id="demoReload_2" autocomplete="off">
-    </div>
-    权限名称:
-    <div class="layui-inline">
-        <input class="layui-input" name="id" id="demoReload_3" autocomplete="off">
+        <div class="layui-input-inline">
+            <select name="modules" lay-verify="required" id="demoReload_2" lay-search="">
+                <option value="1">已拥有</option>
+                <option value="2">未拥有</option>
+            </select>
+        </div>
     </div>
 
     <button class="layui-btn" data-type="reload">搜索</button>
@@ -35,10 +35,10 @@
 <table class="layui-hide" id="LAY_table_user" lay-filter="user"></table>
 
 <script type="text/html" id="barDemo">
-    {{#  if(d.roleID === -2147483648){ }}
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">未分配</a>
+    {{#  if(d.userId === -2147483648){ }}
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">未拥有</a>
     {{#  }else{              }}
-    <a class="layui-btn layui-btn-xs" lay-event="edit">已分配</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit">已拥有</a>
     {{#  }                   }}
 </script>
 
@@ -48,17 +48,17 @@
     layui.use('table', function () {
 
         var table = layui.table;
-        var role = JSON.parse(sessionStorage.getItem("DATA"));
+        var user = JSON.parse(sessionStorage.getItem("DATA"));
         //方法级渲染
         table.render({
             elem: '#LAY_table_user'
-            , url: '/system/queryModule?role=' + role.roleid
+            , url: '/login/queryRole?user=' + user.userid
             , cols: [[
                 {checkbox: true, fixed: true}
-                , {field: 'permissionid', title: 'ID', width: 80, sort: true, fixed: true}
-                , {field: 'permissionmodule', title: '权限所属模块', width: 120}
-                , {field: 'permissionname', title: '权限描述', width: 180}
-                , {field: 'permissionvalue', title: '权限内容', width: 180}
+                , {field: 'roleid', title: '角色ID', width: 80, sort: true, fixed: true}
+                , {field: 'rolename', title: '角色名称', width: 120}
+                , {field: 'roleexplain', title: '角色描述', width: 180}
+                , {field: 'rolelastupdatetime', title: '上次修改时间', width: 180}
                 , {fixed: 'right', width: 80, title: '状态', align: 'center', toolbar: '#barDemo'}
             ]]
             , id: 'testReload'
@@ -68,6 +68,8 @@
         });
 
         table.on('tool(user)', function (obj) {
+
+
             //data是每行数据组成的js对象
             var data = obj.data;
 
@@ -97,38 +99,31 @@
             reload: function () {
                 var demoReload_1 = $('#demoReload_1');
                 var demoReload_2 = $('#demoReload_2');
-                var demoReload_3 = $('#demoReload_3');
-
                 //执行重载
                 table.reload('testReload', {
                     page: {
                         curr: 1 //重新从第 1 页开始
                     }
                     , where: {
-
-                            id: demoReload_1.val(),
-                            module: demoReload_2.val(),
-                            name: demoReload_3.val()
-
+                        username: demoReload_1.val(),
+                        userType: demoReload_2.val(),
                     }
                 });
             }
         };
 
         function loadTable() {
+
             var demoReload_1 = $('#demoReload_1');
             var demoReload_2 = $('#demoReload_2');
-            var demoReload_3 = $('#demoReload_3');
+
             table.reload('testReload', {
                 page: {
                     curr: 1 //重新从第 1 页开始
                 }
                 , where: {
-
-                        id: demoReload_1.val(),
-                        module: demoReload_2.val(),
-                        name: demoReload_3.val()
-
+                    username: demoReload_1.val(),
+                    userType: demoReload_2.val(),
                 }
             });
         }

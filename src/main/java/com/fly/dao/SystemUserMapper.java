@@ -26,4 +26,8 @@ public interface SystemUserMapper {
     List<SystemRole> getUserRolesByUserId(Integer userid);
 
     List<Integer> getUserRolesIDByUserId(Integer userid);
+
+    List<SystemUser> selectUser(@Param("username") String username);
+
+
 }

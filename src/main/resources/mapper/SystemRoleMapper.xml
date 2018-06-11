@@ -7,6 +7,7 @@
         <result column="roleExplain" jdbcType="VARCHAR" property="roleexplain"/>
         <result column="roleCreateTime" jdbcType="TIMESTAMP" property="rolecreatetime"/>
         <result column="roleLastUpdateTime" jdbcType="TIMESTAMP" property="rolelastupdatetime"/>
+        <result column="userId" jdbcType="INTEGER" property="userId"/>
     </resultMap>
     <sql id="Base_Column_List">
     roleId, roleName, roleExplain, roleCreateTime, roleLastUpdateTime
@@ -16,6 +17,21 @@
         <include refid="Base_Column_List"/>
         from roletb
         where roleId = #{roleid,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectUserRoles" resultMap="BaseResultMap">
+
+        select r.*,u.userId as userId from roletb r left join userroletb u
+        on r.roleId = u.roleId and u.userId = #{userId}
+
+        <trim prefix="where" prefixOverrides="and">
+
+            <if test=" name != null and name.length()>0 ">
+                and roleName like "%"#{name}"%"
+            </if>
+
+        </trim>
+
     </select>
 
     <select id="selectSystemRoles" resultMap="BaseResultMap">

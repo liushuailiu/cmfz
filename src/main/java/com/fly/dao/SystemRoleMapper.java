@@ -1,6 +1,7 @@
 package com.fly.dao;
 
 import com.fly.pojo.SystemRole;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -18,5 +19,7 @@ public interface SystemRoleMapper {
     int updateByPrimaryKey(SystemRole record);
 
     List<SystemRole> selectSystemRoles();
+
+    List<SystemRole> selectUserRoles(@Param("userId") Integer userId, @Param("name") String name);
 
 }

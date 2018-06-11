@@ -3,6 +3,7 @@ package com.fly.pojo;
 import java.util.Date;
 
 public class SystemRole {
+
     private Integer roleid;
 
     private String rolename;
@@ -12,6 +13,16 @@ public class SystemRole {
     private Date rolecreatetime;
 
     private Date rolelastupdatetime;
+
+    private Integer userId;
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
 
     public Integer getRoleid() {
         return roleid;
