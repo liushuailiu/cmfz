@@ -19,14 +19,6 @@
     <div class="layui-inline">
         <input class="layui-input" name="username" id="demoReload_1" autocomplete="off">
     </div>
-    <div class="layui-inline">
-        <div class="layui-input-inline">
-            <select name="modules" lay-verify="required" id="demoReload_2" lay-search="">
-                <option value="1">已拥有</option>
-                <option value="2">未拥有</option>
-            </select>
-        </div>
-    </div>
 
     <button class="layui-btn" data-type="reload">搜索</button>
 
@@ -75,18 +67,19 @@
 
             //分配权限
             if (obj.event === 'del') {
-                $.post("/system/get", {Role: role.roleid, pId: data.permissionid}, function (result) {
+                $.post("/login/get", {user: user.userid , role: data.roleid}, function (result) {
                     if (result.code == 200) {
-                        layer.msg("权限分配成功");
+                        layer.msg("角色分配成功");
                         loadTable();
                     } else {
                         layer.msg("系统繁忙!!!");
                     }
                 }, "json");
+                //移除用户角色
             }else if(obj.event === 'edit'){
-                $.post("/system/lost", {Role: role.roleid, pId: data.permissionid}, function (result) {
+                $.post("/login/lost", {user: data.userId, rId: data.roleid}, function (result) {
                     if (result.code == 200) {
-                        layer.msg("权限回收成功");
+                        layer.msg("角色回收成功");
                         loadTable();
                     } else {
                         layer.msg("系统繁忙!!!");
@@ -98,32 +91,29 @@
         var $ = layui.$, active = {
             reload: function () {
                 var demoReload_1 = $('#demoReload_1');
-                var demoReload_2 = $('#demoReload_2');
                 //执行重载
                 table.reload('testReload', {
                     page: {
                         curr: 1 //重新从第 1 页开始
                     }
                     , where: {
-                        username: demoReload_1.val(),
-                        userType: demoReload_2.val(),
+                        username: demoReload_1.val()
                     }
                 });
             }
         };
 
+
         function loadTable() {
 
             var demoReload_1 = $('#demoReload_1');
-            var demoReload_2 = $('#demoReload_2');
 
             table.reload('testReload', {
                 page: {
                     curr: 1 //重新从第 1 页开始
                 }
                 , where: {
-                    username: demoReload_1.val(),
-                    userType: demoReload_2.val(),
+                    username: demoReload_1.val()
                 }
             });
         }

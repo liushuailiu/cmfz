@@ -22,4 +22,8 @@ public interface SystemRoleMapper {
 
     List<SystemRole> selectUserRoles(@Param("userId") Integer userId, @Param("name") String name);
 
+    Integer deleteUserRole(@Param("user") Integer user, @Param("role") Integer role);
+
+    Integer userGetRole( @Param("user") Integer user , @Param("role") Integer role);
+
 }

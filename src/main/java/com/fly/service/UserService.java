@@ -25,7 +25,7 @@ public class UserService {
 
     @SystemLogAnnotation(describe = SystemLogProperties.USER_LOGIN)
     public SystemUser loginUser(String name, String pass) {
-        return systemUserMapper.selectByNameAndPass(name,pass);
+        return systemUserMapper.selectByNameAndPass(name, pass);
     }
 
     @SystemLogAnnotation(describe = SystemLogProperties.USER_PERMISSION_ALL)
@@ -38,6 +38,7 @@ public class UserService {
     public List<SystemRole> getUserRolesByUserId(Integer userid) {
         return systemUserMapper.getUserRolesByUserId(userid);
     }
+
     @SystemLogAnnotation(describe = SystemLogProperties.USER_ROLES_ID_ALL)
     public List<Integer> getUserRolesIDByUserId(Integer userid) {
         return systemUserMapper.getUserRolesIDByUserId(userid);
@@ -49,7 +50,7 @@ public class UserService {
 
     public Page queryUser(Integer page, Integer limit, String username) {
 
-        PageHelper.startPage(page,limit);
+        PageHelper.startPage(page, limit);
         List<SystemUser> systemUsers = systemUserMapper.selectUser(username);
         PageInfo pageInfo = new PageInfo(systemUsers);
         return new Page(pageInfo);
@@ -57,17 +58,37 @@ public class UserService {
     }
 
     public Page queryUserRoles(Integer page, Integer limit, Integer userId, String name) {
-        PageHelper.startPage(page,limit);
-        List<SystemRole> systemRoles = systemRoleMapper.selectUserRoles(userId,name);
+        PageHelper.startPage(page, limit);
+        List<SystemRole> systemRoles = systemRoleMapper.selectUserRoles(userId, name);
 
-        if(systemRoles!=null){
-            for (SystemRole s: systemRoles) {
-                if(s.getUserId()==null)
+        if (systemRoles != null) {
+            for (SystemRole s : systemRoles) {
+                if (s.getUserId() == null)
                     s.setUserId(Integer.MIN_VALUE);
             }
         }
 
         PageInfo pageInfo = new PageInfo(systemRoles);
         return new Page(pageInfo);
+    }
+
+    public Page userLostRole(Integer user, Integer role) {
+
+        Integer count = systemRoleMapper.deleteUserRole(user, role);
+
+        Page page = count > 0 ? new Page(200) : new Page(500);
+
+        return page;
+
+    }
+
+    public Page userGetRole(Integer user, Integer role) {
+
+        Integer count = systemRoleMapper.userGetRole(user, role);
+
+        Page page = count > 0 ? new Page(200) : new Page(500);
+
+        return page;
+
     }
 }

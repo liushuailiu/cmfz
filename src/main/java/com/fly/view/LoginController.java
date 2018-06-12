@@ -8,14 +8,12 @@ import com.fly.util.Page;
 import com.fly.util.system.SystemResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -31,14 +29,45 @@ public class LoginController {
     @Autowired
     private RedisTemplate redisTemplate;
 
+// "/login/lost", {user: data.userId, rId: data.roleid
+
+    /**
+     * 给用户分配角色
+     * @param user 用户ID
+     * @param role 角色ID
+     * @return
+     */
+
+    @PostMapping("/get")
+    public Page userGetRole(@RequestParam("user")Integer user,@RequestParam("role")Integer role){
+
+        return userService.userGetRole(user,role);
+
+    }
+
+    /**
+     * 回收用户角色
+     * @param user 用户ID
+     * @param role 角色ID
+     * @return
+     */
+
+    @PostMapping("/lost")
+    public Page userLostOrGetRole(@RequestParam("user")Integer user , @RequestParam("rId") Integer role){
+
+        return userService.userLostRole(user,role);
+
+    }
+
 
     /**
      * 查询用户拥有以及未拥有的角色
      * @return
      */
     @PostMapping("/queryRole")
-    public Page queryUserRoles(Integer page , Integer limit , @RequestParam("user") Integer userId , @RequestParam(value = "username",required = false) String name){
-        return userService.queryUserRoles(page , limit , userId , name);
+    public Page queryUserRoles(Integer page , Integer limit , @RequestParam("user") Integer userId
+            , @RequestParam(value = "username",required = false) String name){
+        return userService.queryUserRoles(page , limit , userId , name );
     }
 
     /**

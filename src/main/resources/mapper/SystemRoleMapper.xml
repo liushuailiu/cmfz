@@ -113,4 +113,17 @@
       roleLastUpdateTime = #{rolelastupdatetime,jdbcType=TIMESTAMP}
     where roleId = #{roleid,jdbcType=INTEGER}
   </update>
+
+    <delete id="deleteUserRole" >
+
+        delete from userroletb where userId = #{user} and roleId = #{role}
+
+    </delete>
+
+    <insert id="userGetRole">
+
+        insert into userroletb (userId, roleId) values (#{user},#{role})
+
+    </insert>
+
 </mapper>
