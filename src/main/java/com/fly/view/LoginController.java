@@ -5,7 +5,9 @@ import com.fly.auth.Token;
 import com.fly.pojo.SystemUser;
 import com.fly.service.UserService;
 import com.fly.util.Page;
+import com.fly.util.system.IpUtils;
 import com.fly.util.system.SystemResult;
+import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
@@ -41,14 +44,16 @@ public class LoginController {
      * @return
      */
     @PostMapping("/register")
-    public Page registerUser(SystemUser systemUser){
+    public Page registerUser(SystemUser systemUser, HttpServletRequest request){
+
+        String IP = IpUtils.getRemoteHost(request);
         //设置系统创建时间
         systemUser.setUsercreatetime(new Date());
+        systemUser.setUserlastloginip(IP);
         //设置上次登录时间
         systemUser.setUserlastlogintime(new Date());
         return userService.insertUser(systemUser);
     }
-//    /login/seal",{userId:data.userid
 
     /**
      * 封号
@@ -122,7 +127,7 @@ public class LoginController {
 
     //用户登录操作
     @PostMapping(value = "/confirm")
-    public Object confirm(String name,String pass){
+    public Object confirm(String name,String pass,HttpServletRequest request){
 
         SystemUser systemUser = userService.loginUser(name,pass);
         if(systemUser==null){
@@ -131,6 +136,9 @@ public class LoginController {
         }
         if(systemUser.getUserislockout())
             return new SystemResult("账号已被禁用,解锁请联系 : QQ 1779905848",1);
+
+        userService.updateLoginType(request,systemUser);
+
         //根据用户ID查找到用户的所有角色ID
         List<Integer> roles = userService.getUserRolesIDByUserId(systemUser.getUserid());
 //        List<Integer> modules = userService.getModuleByRoles(roles);

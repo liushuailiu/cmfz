@@ -7,12 +7,15 @@ import com.fly.pojo.SystemUser;
 import com.fly.util.Page;
 import com.fly.util.aop.SystemLogAnnotation;
 import com.fly.util.aop.SystemLogProperties;
+import com.fly.util.system.IpUtils;
 import com.fly.util.system.PasswordEncoder;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -125,5 +128,13 @@ public class UserService {
         Integer count = systemUserMapper.updateUserType(user);
         Page page = count > 0 ? new Page(200) : new Page(500);
         return page;
+    }
+
+    public void updateLoginType(HttpServletRequest request, SystemUser systemUser) {
+
+        systemUser.setUserlastloginip(IpUtils.getRemoteHost(request));
+        systemUser.setUserlastlogintime(new Date());
+        systemUserMapper.updateByPrimaryKeySelective(systemUser);
+
     }
 }
