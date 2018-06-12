@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -29,7 +30,46 @@ public class LoginController {
     @Autowired
     private RedisTemplate redisTemplate;
 
-// "/login/lost", {user: data.userId, rId: data.roleid
+
+    /**
+     * 注册新用户
+     * @return
+     */
+    /**
+     * 注册新用户
+     * @param systemUser
+     * @return
+     */
+    @PostMapping("/register")
+    public Page registerUser(SystemUser systemUser){
+        //设置系统创建时间
+        systemUser.setUsercreatetime(new Date());
+        //设置上次登录时间
+        systemUser.setUserlastlogintime(new Date());
+        return userService.insertUser(systemUser);
+    }
+//    /login/seal",{userId:data.userid
+
+    /**
+     * 封号
+     * @param user
+     * @return
+     */
+    @PostMapping("/seal")
+    public Page sealUser(@RequestParam("userId") Integer user){
+        return userService.updateUserWrongCount(user);
+    }
+
+    /**
+     * 账号回复正常
+     * @param user
+     * @return
+     */
+
+    @PostMapping("/normal")
+    public Page normalUser(@RequestParam("userId") Integer user){
+        return userService.updateUserType(user);
+    }
 
     /**
      * 给用户分配角色
@@ -85,8 +125,10 @@ public class LoginController {
     public Object confirm(String name,String pass){
 
         SystemUser systemUser = userService.loginUser(name,pass);
-        if(systemUser==null)
+        if(systemUser==null){
+            userService.updateUserWrongCount(name);
             return new SystemResult("用户名或密码错误",1);
+        }
         if(systemUser.getUserislockout())
             return new SystemResult("账号已被禁用,解锁请联系 : QQ 1779905848",1);
         //根据用户ID查找到用户的所有角色ID

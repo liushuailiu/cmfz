@@ -29,6 +29,7 @@
     <!--</div>-->
 
     <button class="layui-btn" data-type="reload">搜索</button>
+    <button class="layui-btn" data-type="addUser">添加新用户</button>
 
 </div>
 
@@ -58,15 +59,15 @@
             elem: '#LAY_table_user'
             , url: '/login/query'
             , cols: [[
-                {checkbox: true, fixed: true}
-                , {field: 'username', title: '用户名称', edit: 'text', width: 100, fixed: true}
-                , {field: 'userlastlogintime', title: '上次登录时间', width: 200}
-                , {field: 'userlockouttime', title: '上次登出时间', width: 200}
+                {checkbox: true}
+                , {field: 'username', title: '用户名称', edit: 'text', width: 100}
+                , {field: 'userlastlogintime', title: '上次登录时间', width: 180}
+                , {field: 'userlockouttime', title: '上次登出时间', width: 180}
                 , {field: 'useremail', edit: 'text', title: '邮箱', width: 180}
                 , {field: 'usertelephone', edit: 'text', title: '电话', width: 180}
                 , {field: 'userlastloginip', title: '上次登录IP', width: 180}
-                , {fixed: 'right', width: 80, title: '状态', align: 'center', toolbar: '#barDemo'}
-                , {fixed: 'right', width: 150, title: '操作', align: 'center', toolbar: '#barDemo_1'}
+                , {width: 80, title: '状态', align: 'center', toolbar: '#barDemo'}
+                , {width: 120, title: '操作', align: 'center', toolbar: '#barDemo_1'}
             ]]
             , id: 'testReload'
             , page: true
@@ -77,10 +78,8 @@
         table.on('tool(user)', function (obj) {
 
             var data = obj.data;
-            sessionStorage.setItem("DATA",JSON.stringify(data));
+            sessionStorage.setItem("DATA", JSON.stringify(data));
             if (obj.event === 'detail') {
-
-
                 layer.open({
                     title: '分配角色',
                     type: 2,
@@ -90,6 +89,24 @@
                         loadTable();
                     }
                 });
+            }else if (obj.event === 'del') {
+                $.post("/login/seal",{userId:data.userid},function (result) {
+                    if(result.code == 200){
+                        layer.msg("封号成功");
+                        loadTable();
+                    }else {
+                        layer.msg("系统繁忙!!!");
+                    }
+                },"json");
+            }else if(obj.event === 'edit'){
+                $.post("/login/normal",{userId:data.userid},function (result) {
+                    if(result.code == 200){
+                        layer.msg("重置成功");
+                        loadTable();
+                    }else {
+                        layer.msg("系统繁忙!!!");
+                    }
+                },"json");
             }
         });
 
@@ -106,7 +123,20 @@
                         username: demoReload_1.val()
                     }
                 });
+            },
+
+            addUser: function () {
+                layer.open({
+                    title: '添加用户',
+                    type: 2,
+                    content: '/admin/role/addUser.html',
+                    area: ['900px', '550px'],
+                    end: function () {
+                        loadTable();
+                    }
+                });
             }
+
         };
 
         function loadTable() {

@@ -41,12 +41,10 @@
         from usertb
         <where>
             <if test=" username != null and username.length()>0 ">
-                  username like "%"#{username}"%"
+                username like "%"#{username}"%"
             </if>
         </where>
     </select>
-
-
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from usertb
@@ -218,6 +216,22 @@
             select roleId from roletb where roleId in
             (select roleId from userroletb where userId = #{userid})
   </select>
+
+    <update id="updateUserWrongCount" parameterType="java.lang.String">
+        update usertb set userPassWrongCout = userPassWrongCout + 1 where userName = #{name}
+    </update>
+
+    <update id="updateUserWrongCountById" parameterType="java.lang.Integer">
+        update usertb set userPassWrongCout = 5 where userId = #{user}
+    </update>
+
+    <update id="updateUserTypeWrongCountById" parameterType="java.lang.Integer">
+        update usertb set userPassWrongCout = 0 where userId = #{user}
+    </update>
+
+    <update id="updateUserType" parameterType="java.lang.Integer">
+        update usertb set userIsLockout = false where userId = #{user}
+    </update>
 
 
 </mapper>

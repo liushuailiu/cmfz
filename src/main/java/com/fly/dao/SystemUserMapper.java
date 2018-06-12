@@ -29,5 +29,11 @@ public interface SystemUserMapper {
 
     List<SystemUser> selectUser(@Param("username") String username);
 
+    void updateUserWrongCount(@Param("name") String name);
 
+    Integer updateUserWrongCountById(@Param("user") Integer user);
+
+    Integer updateUserTypeWrongCountById(@Param("user") Integer user);
+
+    Integer updateUserType(@Param("user") Integer user);
 }

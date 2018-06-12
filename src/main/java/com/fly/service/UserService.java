@@ -7,6 +7,7 @@ import com.fly.pojo.SystemUser;
 import com.fly.util.Page;
 import com.fly.util.aop.SystemLogAnnotation;
 import com.fly.util.aop.SystemLogProperties;
+import com.fly.util.system.PasswordEncoder;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ public class UserService {
 
     @SystemLogAnnotation(describe = SystemLogProperties.USER_LOGIN)
     public SystemUser loginUser(String name, String pass) {
+        PasswordEncoder passwordEncoder = new PasswordEncoder("tom","MD5");
+        pass = passwordEncoder.encode(pass,5);
         return systemUserMapper.selectByNameAndPass(name, pass);
     }
 
@@ -90,5 +93,37 @@ public class UserService {
 
         return page;
 
+    }
+
+    public Page insertUser(SystemUser systemUser) {
+
+        String pass = systemUser.getUserpassword();
+        PasswordEncoder passwordEncoder = new PasswordEncoder("tom","MD5");
+        pass = passwordEncoder.encode(pass,5);
+        systemUser.setUserpassword(pass);
+        System.out.println(pass);
+        int count = systemUserMapper.insertSelective(systemUser);
+        Page page = count > 0 ? new Page(200) : new Page(500);
+        return page;
+
+    }
+
+    public void updateUserWrongCount(String name) {
+
+        systemUserMapper.updateUserWrongCount(name);
+
+    }
+
+    public Page updateUserWrongCount(Integer user) {
+        Integer count = systemUserMapper.updateUserWrongCountById(user);
+        Page page = count > 0 ? new Page(200) : new Page(500);
+        return page;
+    }
+
+    public Page updateUserType(Integer user) {
+        systemUserMapper.updateUserTypeWrongCountById(user);
+        Integer count = systemUserMapper.updateUserType(user);
+        Page page = count > 0 ? new Page(200) : new Page(500);
+        return page;
     }
 }
