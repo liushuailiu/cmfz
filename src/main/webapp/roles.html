@@ -20,11 +20,9 @@
 
 <!--</div>-->
 
-<!--<div class="layui-btn-group demoTable">-->
-<!--<button class="layui-btn" data-type="getCheckData">获取选中行数据</button>-->
-<!--<button class="layui-btn" data-type="getCheckLength">获取选中数目</button>-->
-<!--<button class="layui-btn" data-type="isAll">验证是否全选</button>-->
-<!--</div>-->
+<div class="layui-btn-group demoTable">
+    <button class="layui-btn" data-type="add_module">添加角色</button>
+</div>
 
 <table class="layui-table"
        lay-data="{url:'/roles/query', page:true, id:'idTest'}" lay-filter="demo">
@@ -159,6 +157,19 @@
             , isAll: function () { //验证是否全选
                 var checkStatus = table.checkStatus('idTest');
                 layer.msg(checkStatus.isAll ? '全选' : '未全选')
+            }
+            , add_module:function(){
+                layer.open({
+                    title: '添加角色',
+                    type: 2,
+                    content: '/admin/role/addRoles.html',
+                    area: ['700px', '300px'],
+                    end: function () {
+                        table.reload('idTest', {
+                            url: '/roles/query'
+                        });
+                    }
+                });
             }
         };
 

@@ -25,4 +25,12 @@ public class RoleService {
         return result;
 
     }
+
+    public Page insertRole(SystemRole systemRole) {
+
+        Integer count = systemRoleMapper.insertSelective(systemRole);
+        Page page = count > 0 ? new Page(200) : new Page(500);
+        return page;
+
+    }
 }

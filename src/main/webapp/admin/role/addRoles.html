@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../../js/layui/layui.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="../../js/layui/css/layui.css" media="all">
+    <link rel="stylesheet" type="text/css" href="../../js/zTree/css/zTreeStyle/zTreeStyle.css"/>
+    <link rel="stylesheet" type="text/css" href="../../js/zTree/css/demo.css"/>
+    <script type="text/javascript" src="../../js/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/zTree/js/jquery.ztree.core.js"></script>
+    <script src="../../js/zTree/js/jquery.ztree.excheck.min.js"></script>
+    <script type="text/javascript" src="../../js/crm.js"></script>
+</head>
+<body>
+
+<form class="layui-form layui-form-pane" action="">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">角色名称</label>
+        <div class="layui-input-inline">
+            <input type="text" name="rolename" lay-verify="required" placeholder="请输入角色名称" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">角色描述</label>
+        <div class="layui-input-inline">
+            <input type="text" name="roleexplain" lay-verify="required" placeholder="请输入角色描述" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <button class="layui-btn" lay-submit="" lay-filter="demo2">跳转式提交</button>
+    </div>
+
+</form>
+
+<script>
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form
+            , layer = layui.layer;
+
+        //监听提交
+        form.on('submit(demo2)', function (data) {
+
+            $.post("/roles/insert", data.field, function (result) {
+                if (result.code == 200) {
+
+                    layer.msg('添加成功',
+                        {time: 1000},
+                        function () {
+                            var index = parent.layer
+                                .getFrameIndex(window.name);
+                            parent.layer
+                                .close(index);
+                        });
+                } else {
+                    layer.msg("系统繁忙!!!稍后再试!!!")
+                }
+            }, "json");
+
+            return false;
+        });
+
+    });
+</script>
+
+</body>
+</html>

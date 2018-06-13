@@ -141,7 +141,6 @@ public class LoginController {
 
         //根据用户ID查找到用户的所有角色ID
         List<Integer> roles = userService.getUserRolesIDByUserId(systemUser.getUserid());
-//        List<Integer> modules = userService.getModuleByRoles(roles);
         //根据用户ID得到用户的所有权限
         List<String> userPermissions = userService.getUserPermissionByUserId(systemUser.getUserid());
         //用户登录令牌对象
@@ -167,8 +166,6 @@ public class LoginController {
         map.put("USER_ID",systemUser.getUserid());
         //用户具有的角色
         map.put("ROLES",roles);
-
-//        map.put("MODULES",modules);
 
         map.put("USERNAME",systemUser.getUsername());
 

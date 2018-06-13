@@ -79,7 +79,7 @@
                 layer.confirm('真的删除行么', function (index) {
                     var load = layer.load();
                     $.ajax({
-                        url: '/' + data.moduleid,
+                        url: '/module/' + data.moduleid,
                         type: 'DELETE',
                         success: function (result) {
                             layer.close(load);
@@ -129,7 +129,6 @@
                 layer.open({
                     title: '添加模块',
                     type: 2,
-                    // content: 'http://www.baidu.com',
                     content: '/admin/module/moduleAdd.html',
                     area: ['700px', '300px'],
                     end: function () {
