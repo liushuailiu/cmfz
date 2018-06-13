@@ -1421,4 +1421,53 @@ public class Students {
     public void setPremoneytime(Date premoneytime) {
         this.premoneytime = premoneytime;
     }
+
+    @Override
+    public String toString() {
+        return "Students{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", sex='" + sex + '\'' +
+                ", phone='" + phone + '\'' +
+                ", stustatus='" + stustatus + '\'' +
+                ", perstate='" + perstate + '\'' +
+                ", msgsource='" + msgsource + '\'' +
+                ", sourceurl='" + sourceurl + '\'' +
+                ", sourcekeyword='" + sourcekeyword + '\'' +
+                ", address='" + address + '\'' +
+                ", netpusherid='" + netpusherid + '\'' +
+                ", askerid=" + askerid +
+                ", qq='" + qq + '\'' +
+                ", weixin='" + weixin + '\'' +
+                ", content='" + content + '\'' +
+                ", createtime=" + createtime +
+                ", learnforward='" + learnforward + '\'' +
+                ", isvalid='" + isvalid + '\'' +
+                ", record='" + record + '\'' +
+                ", isreturnvist='" + isreturnvist + '\'' +
+                ", firstvisittime=" + firstvisittime +
+                ", ishome='" + ishome + '\'' +
+                ", hometime=" + hometime +
+                ", lostvalid='" + lostvalid + '\'' +
+                ", ispay='" + ispay + '\'' +
+                ", paytime=" + paytime +
+                ", money=" + money +
+                ", isreturnmoney='" + isreturnmoney + '\'' +
+                ", isinclass='" + isinclass + '\'' +
+                ", inclasstime=" + inclasstime +
+                ", inclasscontent='" + inclasscontent + '\'' +
+                ", askercontent='" + askercontent + '\'' +
+                ", isdel='" + isdel + '\'' +
+                ", frompart='" + frompart + '\'' +
+                ", stuconcern='" + stuconcern + '\'' +
+                ", isbaobei='" + isbaobei + '\'' +
+                ", teacherid='" + teacherid + '\'' +
+                ", classid='" + classid + '\'' +
+                ", createuser='" + createuser + '\'' +
+                ", returnmoneyreason='" + returnmoneyreason + '\'' +
+                ", premoney=" + premoney +
+                ", premoneytime=" + premoneytime +
+                '}';
+    }
 }

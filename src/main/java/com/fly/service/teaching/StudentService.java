@@ -25,4 +25,26 @@ public class StudentService {
         PageInfo pageInfo = new PageInfo(students);
         return new Page(pageInfo);
     }
+
+    public Page batchStudents(List<Students> students) {
+        boolean flag = true;
+        for (Students s : students){
+            Integer count = studentsMapper.insertSelective(s);
+            if(count<1) {
+                flag = false;
+            }
+        }
+
+        Page page = flag ? new Page(200):new Page(500);
+        return page;
+
+    }
+
+    /**
+     * 查询学生,导出excel
+     * @return
+     */
+    public List<Students> downloadForExcel() {
+        return studentsMapper.selectStudentAll();
+    }
 }

@@ -196,23 +196,13 @@ CREATE TABLE `userroletb` (
   CONSTRAINT `FK_userroletb_userId` FOREIGN KEY (`userId`) REFERENCES `usertb` (`userId`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
-
-
 /*Data for the table `userroletb` */
-
-
 
 insert  into `userroletb`(`userRoleId`,`userId`,`roleId`,`userRoleLastUpdateTime`) values (1,1,1,'2018-05-10 13:35:14'),(2,2,1,'2018-05-18 23:54:09');
 
-
-
 /*Table structure for table `usertb` */
 
-
-
 DROP TABLE IF EXISTS `usertb`;
-
-
 
 CREATE TABLE `usertb` (
   `userId` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户ID',
@@ -230,15 +220,9 @@ CREATE TABLE `usertb` (
   PRIMARY KEY (`userId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
-
-
 /*Data for the table `usertb` */
 
-
-
 insert  into `usertb`(`userId`,`userName`,`userPassWord`,`userIsLockout`,`userUpdateTime`,`userCreateTime`,`userLastLoginTime`,`userLastLoginIp`,`userPassWrongCout`,`userLockoutTime`,`userEmail`,`userTelephone`) values (1,'马帅','f29ff7d029b838f76beea5cb85b9c2f5',0,'2018-05-18 22:55:44','2018-05-10 12:53:39','2018-05-10 12:53:39','192.168.0.1',0,'2018-05-10 12:53:39','1119616605@qq.com','18336328557'),(2,'tom','229d0f52f7a0596eeece160908e54ad9',0,'2018-05-18 23:00:35','2018-05-10 12:53:39','2018-05-10 12:53:39',NULL,0,'2018-05-10 12:53:39','1119616605@qq.com','18336328557');
-
-
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 
@@ -247,6 +231,31 @@ insert  into `usertb`(`userId`,`userName`,`userPassWord`,`userIsLockout`,`userUp
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+select m.*,t.moduleName as parentName from moduletb m left join moduletb t
+on m.parentId = t.moduleId;
+
+delete from permissiontb;
+select * from permissiontb;
+
+select distinct (permissionModule) from permissiontb;
+
+select p.*,r.roleId from permissiontb p left join rolepermissiontb r
+on p.permissionId = r.permissionId and r.roleId = 2
+order by p.permissionModule;
+
+delete from permissiontb;
+delete from rolepermissiontb;
+
+select p.*, r.roleId as roleID from permissiontb p left join rolepermissiontb r
+    on p.permissionId = r.permissionId and r.roleId = 2
+
+where p.permissionName like '上'
+order by p.permissionModule;
+
+select * from usertb ;
+
+select r.*,u.* from roletb r left join userroletb u on r.roleId = u.roleId and u.userId = 1;
 
 create trigger updateUserType before update on usertb for each row
   begin
@@ -258,4 +267,55 @@ create trigger updateUserType before update on usertb for each row
   end;
 
 drop trigger updateUserType;
+
+select * from roletb;
+
+CREATE TABLE `spring_students` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT '学生编号',
+  `Name` varchar(50) NOT NULL COMMENT '学员姓名',
+  `Age` int(11) DEFAULT NULL COMMENT '年龄',
+  `Sex` varchar(50) DEFAULT NULL COMMENT '性别 ',
+  `Phone` varchar(50) DEFAULT NULL COMMENT '学员电话',
+  `StuStatus` varchar(50) DEFAULT NULL COMMENT '学历',
+  `PerState` varchar(50) DEFAULT NULL COMMENT '个人状态',
+  `MsgSource` varchar(50) DEFAULT NULL COMMENT '来源渠道',
+  `SourceUrl` varchar(100) DEFAULT NULL COMMENT '来源网址',
+  `SourceKeyWord` varchar(100) DEFAULT NULL COMMENT '来源关键词',
+  `Address` varchar(100) DEFAULT NULL COMMENT '所在区域',
+  `NetPusherId` varchar(100) DEFAULT NULL COMMENT '网络咨询Id',
+  `AskerId` int(11) DEFAULT NULL COMMENT '班主任Id',
+  `QQ` varchar(50) DEFAULT NULL COMMENT '学员QQ',
+  `WeiXin` varchar(50) DEFAULT NULL COMMENT '学员微信',
+  `Content` varchar(2000) DEFAULT NULL COMMENT '备注',
+  `CreateTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `LearnForward` varchar(100) DEFAULT NULL COMMENT '课程方向',
+  `IsValid` varchar(50) DEFAULT '待定' COMMENT '是否有效',
+  `Record` varchar(100) DEFAULT NULL COMMENT '打分',
+  `IsReturnVist` varchar(50) DEFAULT '否' COMMENT '是否回访',
+  `FirstVisitTime` timestamp NULL DEFAULT NULL COMMENT '首次回访时间',
+  `IsHome` varchar(50) DEFAULT '否' COMMENT '是否上门',
+  `HomeTime` timestamp NULL DEFAULT NULL COMMENT '上门时间',
+  `LostValid` varchar(2000) DEFAULT NULL COMMENT '无效原因',
+  `IsPay` varchar(50) DEFAULT '否' COMMENT '是否付款',
+  `PayTime` timestamp NULL DEFAULT NULL COMMENT '付款时间',
+  `Money` double DEFAULT '0' COMMENT '付款金额',
+  `IsReturnMoney` varchar(50) DEFAULT '否' COMMENT '是否退费',
+  `IsInClass` varchar(50) DEFAULT '否' COMMENT '是否进班',
+  `InClassTime` timestamp NULL DEFAULT NULL COMMENT '进班时间',
+  `InClassContent` varchar(2000) DEFAULT NULL COMMENT '进班备注',
+  `AskerContent` varchar(2000) DEFAULT NULL COMMENT '班主任备注',
+  `IsDel` varchar(50) DEFAULT '否' COMMENT '是否删除',
+  `FromPart` varchar(100) DEFAULT NULL COMMENT '来源部门',
+  `StuConcern` varchar(100) DEFAULT NULL COMMENT '学员关注',
+  `IsBaoBei` varchar(50) DEFAULT NULL COMMENT '是否报备',
+  `teacherID` varchar(50) DEFAULT NULL COMMENT '授课老师ID',
+  `classID` varchar(50) DEFAULT NULL comment '所属班级ID',
+  `CreateUser` varchar(50) DEFAULT NULL COMMENT '录入人姓名',
+  `ReturnMoneyReason` varchar(2000) DEFAULT NULL COMMENT '退费原因',
+  `PreMoney` double DEFAULT '0' COMMENT '预付定金',
+  `PreMoneyTime` timestamp NULL DEFAULT NULL COMMENT '预付定金时间',
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+
+
 

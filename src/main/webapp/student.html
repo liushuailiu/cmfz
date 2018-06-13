@@ -32,6 +32,7 @@
     <button class="layui-btn" data-type="reload">搜索</button>
     <button class="layui-btn" data-type="addUser">添加新用户</button>
     <button type="button" class="layui-btn" id="test3"><i class="layui-icon"></i>上传EXCEL</button>
+    <button class="layui-btn" data-type="download"><i class="layui-icon"></i>导出EXCEL</button>
 
 </div>
 
@@ -59,17 +60,23 @@
         //方法级渲染
         table.render({
             elem: '#LAY_table_user'
-            , url: '/login/query'
+            , url: '/stu/page'
             , cols: [[
                 {checkbox: true}
-                , {field: 'username', title: '用户名称', edit: 'text', width: 100}
-                , {field: 'userlastlogintime', title: '上次登录时间', width: 180}
-                , {field: 'userlockouttime', title: '上次登出时间', width: 180}
-                , {field: 'useremail', edit: 'text', title: '邮箱', width: 180}
-                , {field: 'usertelephone', edit: 'text', title: '电话', width: 180}
-                , {field: 'userlastloginip', title: '上次登录IP', width: 180}
-                , {width: 80, title: '状态', align: 'center', toolbar: '#barDemo'}
-                , {width: 120, title: '操作', align: 'center', toolbar: '#barDemo_1'}
+                , {field: 'name', align: 'center',title: '姓名', width: 80}
+                , {field: 'address',align: 'center', title: '地址', width: 100}
+                , {field: 'age', align: 'center',title: '年龄', width: 80}
+                , {field: 'createtime',align: 'center', title: '录入时间', width: 180}
+                , {field: 'createuser', align: 'center',edit: 'text', title: '登记人', width: 80}
+                , {field: 'ishome', align: 'center',title: '是否家访', width: 80}
+                , {field: 'msgsource',align: 'center', title: '来源渠道', width: 80}
+                , {field: 'perstate',align: 'center', title: '状态', width: 80}
+                , {field: 'phone', align: 'center',title: '电话', width: 150}
+                , {field: 'qq',align: 'center', title: 'QQ', width: 150}
+                , {field: 'stustatus',align: 'center', title: '学历', width: 80}
+                , {field: 'weixin',align: 'center', title: '微信', width: 120}
+                // , {width: 80, title: '状态', align: 'center', toolbar: '#barDemo'}
+                // , {width: 120, title: '操作', align: 'center', toolbar: '#barDemo_1'}
             ]]
             , id: 'testReload'
             , page: true
@@ -137,6 +144,10 @@
                         loadTable();
                     }
                 });
+            },
+            // 导出EXCEL
+            download:function () {
+                window.location.href = "/stu/download";
             }
 
         };
@@ -159,9 +170,7 @@
         });
 
     });
-</script>
 
-<script>
     layui.use('upload', function(){
         var $ = layui.jquery
             ,upload = layui.upload;
@@ -171,9 +180,14 @@
             elem: '#test3'
             ,url: '/stu/upload'
             ,accept: 'file' //普通文件
+            ,method:'post'
             ,exts: 'xls|xlsx' //只允许上传excel文件
             ,done: function(res){
-                console.log(res)
+                if(res.code==200){
+                    layer.msg("学生信息上传成功!!!")
+                }else{
+                    layer.msg("系统繁忙!!!")
+                }
             }
         });
     });
