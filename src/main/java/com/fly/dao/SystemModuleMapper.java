@@ -20,8 +20,6 @@ public interface SystemModuleMapper {
 
     int updateByPrimaryKey(SystemModule record);
 
-    void queryModuleTree();
-
     List<SystemModule> queryModuleTreeByRoleID(Integer[] roles);
 
     List<SystemModule> selectSystemModule();

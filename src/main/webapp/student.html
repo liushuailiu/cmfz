@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/layui/layui.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="js/layui/css/layui.css" media="all">
+    <link rel="stylesheet" type="text/css" href="js/zTree/css/zTreeStyle/zTreeStyle.css"/>
+    <link rel="stylesheet" type="text/css" href="js/zTree/css/demo.css"/>
+    <script type="text/javascript" src="js/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="js/zTree/js/jquery.ztree.core.js"></script>
+    <script src="js/zTree/js/jquery.ztree.excheck.min.js"></script>
+    <script type="text/javascript" src="js/crm.js"></script>
+</head>
+<body>
+
+<div class="demoTable">
+    用户名 ：
+    <div class="layui-inline">
+        <input class="layui-input" name="username" id="demoReload_1" autocomplete="off">
+    </div>
+
+    <!--权限模块：-->
+    <!--<div class="layui-inline">-->
+    <!--<input class="layui-input" name="id" id="demoReload_2" autocomplete="off">-->
+    <!--</div>-->
+    <!--权限名称:-->
+    <!--<div class="layui-inline">-->
+    <!--<input class="layui-input" name="id" id="demoReload_3" autocomplete="off">-->
+    <!--</div>-->
+
+    <button class="layui-btn" data-type="reload">搜索</button>
+    <button class="layui-btn" data-type="addUser">添加新用户</button>
+    <button type="button" class="layui-btn" id="test3"><i class="layui-icon"></i>上传EXCEL</button>
+
+</div>
+
+<table class="layui-hide" id="LAY_table_user" lay-filter="user"></table>
+
+<script type="text/html" id="barDemo">
+    {{#  if(d.userislockout === false){ }}
+    <a class="layui-btn layui-btn-xs" lay-event="del">正常</a>
+    {{#  }else{              }}
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="edit">禁用</a>
+    {{#  }                   }}
+</script>
+
+<script type="text/html" id="barDemo_1">
+    <a class="layui-btn layui-btn-xs" lay-event="detail">角色操作</a>
+</script>
+
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+
+
+    layui.use('table', function () {
+
+        var table = layui.table;
+        //方法级渲染
+        table.render({
+            elem: '#LAY_table_user'
+            , url: '/login/query'
+            , cols: [[
+                {checkbox: true}
+                , {field: 'username', title: '用户名称', edit: 'text', width: 100}
+                , {field: 'userlastlogintime', title: '上次登录时间', width: 180}
+                , {field: 'userlockouttime', title: '上次登出时间', width: 180}
+                , {field: 'useremail', edit: 'text', title: '邮箱', width: 180}
+                , {field: 'usertelephone', edit: 'text', title: '电话', width: 180}
+                , {field: 'userlastloginip', title: '上次登录IP', width: 180}
+                , {width: 80, title: '状态', align: 'center', toolbar: '#barDemo'}
+                , {width: 120, title: '操作', align: 'center', toolbar: '#barDemo_1'}
+            ]]
+            , id: 'testReload'
+            , page: true
+            , height: 500
+            , method: 'post'
+        });
+
+        table.on('tool(user)', function (obj) {
+
+            var data = obj.data;
+            sessionStorage.setItem("DATA", JSON.stringify(data));
+            if (obj.event === 'detail') {
+                layer.open({
+                    title: '分配角色',
+                    type: 2,
+                    content: '/admin/role/userRoles.html',
+                    area: ['1200px', '550px'],
+                    end: function () {
+                        loadTable();
+                    }
+                });
+            }else if (obj.event === 'del') {
+                $.post("/login/seal",{userId:data.userid},function (result) {
+                    if(result.code == 200){
+                        layer.msg("封号成功");
+                        loadTable();
+                    }else {
+                        layer.msg("系统繁忙!!!");
+                    }
+                },"json");
+            }else if(obj.event === 'edit'){
+                $.post("/login/normal",{userId:data.userid},function (result) {
+                    if(result.code == 200){
+                        layer.msg("重置成功");
+                        loadTable();
+                    }else {
+                        layer.msg("系统繁忙!!!");
+                    }
+                },"json");
+            }
+        });
+
+        var $ = layui.$, active = {
+            reload: function () {
+                var demoReload_1 = $('#demoReload_1');
+
+                //执行重载
+                table.reload('testReload', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    , where: {
+                        username: demoReload_1.val()
+                    }
+                });
+            },
+
+            addUser: function () {
+                layer.open({
+                    title: '添加用户',
+                    type: 2,
+                    content: '/admin/role/addUser.html',
+                    area: ['900px', '550px'],
+                    end: function () {
+                        loadTable();
+                    }
+                });
+            }
+
+        };
+
+        function loadTable() {
+            var demoReload_1 = $('#demoReload_1');
+            table.reload('testReload', {
+                page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+                , where: {
+                    username: demoReload_1.val()
+                }
+            });
+        }
+
+        $('.demoTable .layui-btn').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+    });
+</script>
+
+<script>
+    layui.use('upload', function(){
+        var $ = layui.jquery
+            ,upload = layui.upload;
+
+        //指定允许上传的文件类型
+        upload.render({
+            elem: '#test3'
+            ,url: '/stu/upload'
+            ,accept: 'file' //普通文件
+            ,exts: 'xls|xlsx' //只允许上传excel文件
+            ,done: function(res){
+                console.log(res)
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

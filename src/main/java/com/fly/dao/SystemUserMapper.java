@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface SystemUserMapper {
+
     int deleteByPrimaryKey(Integer userid);
 
     int insert(SystemUser record);
@@ -36,4 +37,6 @@ public interface SystemUserMapper {
     Integer updateUserTypeWrongCountById(@Param("user") Integer user);
 
     Integer updateUserType(@Param("user") Integer user);
+
+
 }

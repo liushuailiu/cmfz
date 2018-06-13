@@ -49,8 +49,8 @@
   </insert>
 
 
-
-    <insert id="insertSelective" parameterType="com.fly.pojo.SystemModule" useGeneratedKeys="true" keyProperty="moduleid">
+    <insert id="insertSelective" parameterType="com.fly.pojo.SystemModule" useGeneratedKeys="true"
+            keyProperty="moduleid">
         insert into moduletb
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="moduleid != null">

@@ -248,3 +248,14 @@ insert  into `usertb`(`userId`,`userName`,`userPassWord`,`userIsLockout`,`userUp
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+create trigger updateUserType before update on usertb for each row
+  begin
+    declare user_wrong int;
+    select new.userPassWrongCout into user_wrong for update ;
+    if user_wrong >= 5 then
+      set new.userIsLockout = 1;
+    end if ;
+  end;
+
+drop trigger updateUserType;
+
