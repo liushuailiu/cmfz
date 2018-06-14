@@ -134,8 +134,9 @@ public class LoginController {
             userService.updateUserWrongCount(name);
             return new SystemResult("用户名或密码错误",1);
         }
-        if(systemUser.getUserislockout())
-            return new SystemResult("账号已被禁用,解锁请联系 : QQ 1779905848",1);
+        if(systemUser.getUserislockout()) {
+            return new SystemResult("账号已被禁用,解锁请联系 : QQ 1779905848", 1);
+        }
 
         userService.updateLoginType(request,systemUser);
 

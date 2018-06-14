@@ -29,6 +29,7 @@ public class UserService {
 
     @SystemLogAnnotation(describe = SystemLogProperties.USER_LOGIN)
     public SystemUser loginUser(String name, String pass) {
+
         PasswordEncoder passwordEncoder = new PasswordEncoder("tom","MD5");
         pass = passwordEncoder.encode(pass,5);
         return systemUserMapper.selectByNameAndPass(name, pass);

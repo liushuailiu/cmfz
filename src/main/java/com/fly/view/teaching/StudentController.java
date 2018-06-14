@@ -45,30 +45,48 @@ public class StudentController {
     @GetMapping("/download")
     public void download(HttpServletResponse response) throws IOException {
 
+        // 定义表头
         String[] tableHeader = {"姓名","地址","年龄","录入时间","登记人","是否家访","来源渠道"
                 ,"状态","电话","QQ","学历","微信"};
 
+        // 创建工作簿
         HSSFWorkbook workbook = new HSSFWorkbook();
-        HSSFSheet sheet = workbook.createSheet("学生表");
-        HSSFRow row = sheet.createRow(0);
+        // 设置单元格样式
         HSSFCellStyle style = workbook.createCellStyle();
+        //居中
         style.setAlignment(HorizontalAlignment.CENTER);
 
+        // 创建第一个工作表
+        HSSFSheet sheet = workbook.createSheet("学生表");
+
+        // 创建第一行
+        HSSFRow row = sheet.createRow(0);
+
         for (int i = 0 ; i<tableHeader.length;i++){
+            // 创建单元格
             HSSFCell cell = row.createCell(i);
+            // 给单元格设置内容
             cell.setCellValue(tableHeader[i]);
+            //将单元格居中
             cell.setCellStyle(style);
+            //自动添加列
             sheet.autoSizeColumn(i);
+            //列宽
             sheet.setColumnWidth(i,50*100);
         }
 
+
+        // 获取要导出的所有学生
         List<Students> list = studentService.downloadForExcel();
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         for (int i = 0; i < list.size(); i++) {
+            // 从第二行开始
             HSSFRow hssfRow = sheet.createRow(i+1);
+            // 每一行对应的学生
             Students students = list.get(i);
+            // 给每个单元格赋值
             hssfRow.createCell(0).setCellValue(students.getName());
             hssfRow.createCell(1).setCellValue(students.getAddress());
             hssfRow.createCell(2).setCellValue(students.getAge());
@@ -81,16 +99,20 @@ public class StudentController {
             hssfRow.createCell(9).setCellValue(students.getQq());
             hssfRow.createCell(10).setCellValue(students.getStustatus());
             hssfRow.createCell(11).setCellValue(students.getWeixin());
+
         }
 
-
+        // 设置excel文件名称
         String fileName = "学生.xls";
+        //避免下载文件名出现乱码
         fileName = URLEncoder.encode(fileName,"UTF8");
+        //开始输出工作簿
         OutputStream outputStream = response.getOutputStream();
+        // 重置response设置
         response.reset();
-        response.setCharacterEncoding("utf-8");
         response.setHeader("Content-disposition", "attachment;filename="+fileName);
         response.setContentType("application/vnd.ms-excel");
+        // 发送工作簿
         workbook.write(outputStream);
         outputStream.flush();
         outputStream.close();
