@@ -13,17 +13,21 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * toekn生成与解析
+ * @author fly
+ */
 public class JsonWebToken {
 
     private static final String SECRET = "secret";
     private static Gson gson = new Gson();
 
     /**
-     * 创建JSONWEBTOKEN头部
+     * 创建JSON_WEB_TOKEN头部
      * @return
      */
     private static Map<String,Object> createHead(){
-        Map<String , Object> map = new HashMap();
+        Map<String , Object> map = new HashMap(16);
         map.put("typ","JWT");
         map.put("alg","HS256");
         return map;

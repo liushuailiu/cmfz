@@ -1,5 +1,6 @@
 package com.fly.util.data;
 
+import com.fly.util.aop.TYPE;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
 /**
@@ -11,8 +12,8 @@ public class DateSourceUtils extends AbstractRoutingDataSource {
     private static final ThreadLocal<String> dataSourceKey =
             new InheritableThreadLocal<String>();
 
-    public static void setDataSourceKey(String dataSource){
-        dataSourceKey.set(dataSource);
+    public static void setDataSourceKey(TYPE type){
+        dataSourceKey.set(type.getType());
     }
 
     @Override

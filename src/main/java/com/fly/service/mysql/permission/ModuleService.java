@@ -1,6 +1,6 @@
-package com.fly.service;
+package com.fly.service.mysql.permission;
 
-import com.fly.dao.SystemModuleMapper;
+import com.fly.dao.mysql.permission.SystemModuleMapper;
 import com.fly.pojo.SystemModule;
 import com.fly.util.Page;
 import com.fly.util.aop.LogAnn;

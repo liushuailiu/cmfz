@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,12 +88,17 @@ public class PoiUtils {
 
     private String getCellValue(Cell cell){
         String value = "";
+        SimpleDateFormat simpleDateFormat =
+                new SimpleDateFormat("yyyy-MM-dd");
         if(cell != null){
             switch (cell.getCellTypeEnum()){
                 case NUMERIC:
-                    // 9 --> 9.00
-                    cell.setCellType(CellType.STRING);
-                    value = cell.getStringCellValue();
+                    if(HSSFDateUtil.isCellDateFormatted(cell)){
+                        value = simpleDateFormat.format(cell.getDateCellValue());
+                    }else{
+                        cell.setCellType(CellType.STRING);
+                        value = cell.getStringCellValue();
+                    }
                     break;
                 case ERROR:
                     value = "非法内容";

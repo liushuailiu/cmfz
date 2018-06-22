@@ -1,6 +1,6 @@
-package com.fly.service;
+package com.fly.service.mysql.permission;
 
-import com.fly.dao.LogMessageMapper;
+import com.fly.dao.mysql.system.LogMessageMapper;
 import com.fly.pojo.LogMessage;
 import com.fly.util.aop.LogAnn;
 import com.fly.util.aop.Log;

@@ -1,6 +1,6 @@
 package com.fly.view.teaching;
 
-import com.fly.service.UserService;
+import com.fly.service.mysql.permission.UserService;
 import com.fly.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

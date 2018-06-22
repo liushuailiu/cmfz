@@ -1,7 +1,7 @@
 package com.fly.view;
 
 import com.fly.pojo.LogMessage;
-import com.fly.service.LogMessageService;
+import com.fly.service.mysql.permission.LogMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

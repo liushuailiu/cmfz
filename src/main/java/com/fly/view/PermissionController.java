@@ -1,7 +1,7 @@
 package com.fly.view;
 
 import com.fly.pojo.SystemPermission;
-import com.fly.service.SystemPermissionService;
+import com.fly.service.mysql.permission.SystemPermissionService;
 import com.fly.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +9,6 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 @RestController

@@ -1,4 +1,4 @@
-package com.fly.dao;
+package com.fly.dao.mysql.system;
 
 import com.fly.pojo.LogMessage;
 import org.springframework.stereotype.Repository;

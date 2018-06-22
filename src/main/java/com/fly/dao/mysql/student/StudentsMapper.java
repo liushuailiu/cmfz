@@ -1,7 +1,6 @@
-package com.fly.dao.teaching;
+package com.fly.dao.mysql.student;
 
-import com.fly.pojo.teaching.Students;
-import org.apache.ibatis.annotations.Param;
+import com.fly.pojo.academic.Students;
 
 import java.util.List;
 

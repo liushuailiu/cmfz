@@ -2,7 +2,7 @@ package com.fly.view;
 
 
 import com.fly.pojo.SystemRole;
-import com.fly.service.RoleService;
+import com.fly.service.mysql.permission.RoleService;
 import com.fly.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

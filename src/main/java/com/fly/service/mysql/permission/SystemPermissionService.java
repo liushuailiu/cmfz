@@ -1,7 +1,6 @@
-package com.fly.service;
+package com.fly.service.mysql.permission;
 
-import com.fly.dao.SystemPermissionMapper;
-import com.fly.pojo.SystemModule;
+import com.fly.dao.mysql.permission.SystemPermissionMapper;
 import com.fly.pojo.SystemPermission;
 import com.fly.util.Page;
 import com.github.pagehelper.PageHelper;

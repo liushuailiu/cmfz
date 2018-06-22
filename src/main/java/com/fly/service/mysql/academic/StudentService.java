@@ -1,7 +1,7 @@
-package com.fly.service.teaching;
+package com.fly.service.mysql.academic;
 
-import com.fly.dao.teaching.StudentsMapper;
-import com.fly.pojo.teaching.Students;
+import com.fly.dao.mysql.student.StudentsMapper;
+import com.fly.pojo.academic.Students;
 import com.fly.util.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -12,6 +12,7 @@ import java.util.List;
 
 /**
  * @author fanliyang
+ * 教务
  */
 @Service
 public class StudentService {

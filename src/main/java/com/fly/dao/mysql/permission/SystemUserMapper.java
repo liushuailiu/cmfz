@@ -1,4 +1,4 @@
-package com.fly.dao;
+package com.fly.dao.mysql.permission;
 
 import com.fly.pojo.SystemRole;
 import com.fly.pojo.SystemUser;

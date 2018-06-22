@@ -21,6 +21,7 @@
     <!--返回JSON数据-->
     <mvc:annotation-driven>
         <mvc:message-converters>
+
             <bean class="org.springframework.http.converter.json.GsonHttpMessageConverter">
                 <property name="supportedMediaTypes">
                     <list>
@@ -38,11 +39,15 @@
                     </bean>
                 </property>
             </bean>
+            <!--前端发送JSON数据,后台自动解析封装-->
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <constructor-arg value="UTF-8"/>
+            </bean>
+
         </mvc:message-converters>
     </mvc:annotation-driven>
 
     <mvc:resources location="/js/" mapping="/js/**"/>
-    <mvc:resources location="/admin/**" mapping="/admin/"/>
     <!--拦截器配置-->
 
     <mvc:interceptors>

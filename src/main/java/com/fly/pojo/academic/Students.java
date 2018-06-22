@@ -1,4 +1,6 @@
-package com.fly.pojo.teaching;
+package com.fly.pojo.academic;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -154,6 +156,7 @@ public class Students {
      *
      * @mbg.generated Wed Jun 13 10:54:46 CST 2018
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createtime;
 
     /**
@@ -199,6 +202,7 @@ public class Students {
      *
      * @mbg.generated Wed Jun 13 10:54:46 CST 2018
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date firstvisittime;
 
     /**
@@ -217,6 +221,7 @@ public class Students {
      *
      * @mbg.generated Wed Jun 13 10:54:46 CST 2018
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date hometime;
 
     /**
@@ -244,6 +249,7 @@ public class Students {
      *
      * @mbg.generated Wed Jun 13 10:54:46 CST 2018
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date paytime;
 
     /**
@@ -280,6 +286,7 @@ public class Students {
      *
      * @mbg.generated Wed Jun 13 10:54:46 CST 2018
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date inclasstime;
 
     /**

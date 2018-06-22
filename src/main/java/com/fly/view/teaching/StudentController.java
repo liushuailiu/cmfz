@@ -1,18 +1,12 @@
 package com.fly.view.teaching;
 
-import com.fly.pojo.teaching.Students;
-import com.fly.service.teaching.StudentService;
+import com.fly.pojo.academic.Students;
+import com.fly.service.mysql.academic.StudentService;
 import com.fly.util.Page;
 import com.fly.util.system.PoiUtils;
 import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 

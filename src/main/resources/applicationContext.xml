@@ -55,6 +55,7 @@
     </bean>
 
 
+
     <!--配置mysql数据源-->
     <bean id="mysqlDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
         <property name="driverClass" value="${jdbc.mysql.driverClass}"/>
@@ -88,7 +89,12 @@
     <bean  id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dateSourceUtils"/>
         <property name="configLocation" value="classpath:mybatis_config.xml"/>
-        <property name="mapperLocations" value="classpath:mapper/*.xml"/>
+        <property name="mapperLocations">
+            <list>
+                <value>classpath:mapper/mysql/*.xml</value>
+                <value>classpath:mapper/oracle/*.xml</value>
+            </list>
+        </property>
     </bean>
 
     <!--dao接口-->
@@ -147,7 +153,7 @@
 
     <aop:config>
         <aop:pointcut id="txPoint" expression="execution(* com.fly.service..*(..))"/>
-        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPoint" order="2"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPoint" order="30"/>
     </aop:config>
 
     <tx:advice id="txAdvice">

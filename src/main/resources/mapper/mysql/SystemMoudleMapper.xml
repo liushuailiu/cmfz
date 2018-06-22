@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.fly.dao.SystemModuleMapper">
+<mapper namespace="com.fly.dao.mysql.permission.SystemModuleMapper">
     <resultMap id="BaseResultMap" type="com.fly.pojo.SystemModule">
         <id column="moduleId" jdbcType="INTEGER" property="moduleid"/>
         <result column="parentId" jdbcType="INTEGER" property="parentid"/>
