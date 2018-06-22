@@ -46,4 +46,11 @@ public interface SystemPermissionMapper {
 
     Integer insertRoleLostPermission(@Param("role") Integer role, @Param("pId") Integer pId);
 
+    /**
+     * 使用存储过程完成权限的插入
+     * @param systemPermission 权限对象
+     * @return 插入行数
+     */
+    int batchInsertRolePermissionNew(SystemPermission systemPermission);
+
 }

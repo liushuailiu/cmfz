@@ -27,6 +27,8 @@ public class SystemPermissionService  {
         return count  ;
     }
 
+
+
     public List<String> queryAll() {
         return permissionMapper.queryAll();
     }
@@ -69,4 +71,19 @@ public class SystemPermissionService  {
         Page page = count<=0 ? new Page(500):new Page(200);
         return page;
     }
+
+    /**
+     * 使用存储过程批量插入数据
+     * @param permissiontbs
+     * @return
+     */
+    public int updateSystemPermissionNew(List<SystemPermission> permissiontbs) {
+
+        int count = 0;
+        for (SystemPermission systemPermission : permissiontbs){
+            count += permissionMapper.batchInsertRolePermissionNew(systemPermission);
+        }
+         return count;
+    }
+
 }

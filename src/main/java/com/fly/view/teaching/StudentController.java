@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/stu")
+@RequestMapping(value = "/stu",name = "学生管理")
 @CrossOrigin
 /**
  * @author fanliyang
@@ -137,8 +137,9 @@ public class StudentController {
      */
     @PostMapping("/upload")
     public Page uploadStuByExcel(@RequestParam("file")MultipartFile file){
-
+        // 得到每一行内容
         List<String[]> strings = poiUtils.getWorkbookValue(file);
+
         List<Students> students = new ArrayList<>();
         for (String[] str : strings ) {
 

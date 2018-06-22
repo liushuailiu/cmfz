@@ -3,8 +3,8 @@ package com.fly.service;
 import com.fly.dao.SystemModuleMapper;
 import com.fly.pojo.SystemModule;
 import com.fly.util.Page;
-import com.fly.util.aop.SystemLogAnnotation;
-import com.fly.util.aop.SystemLogProperties;
+import com.fly.util.aop.LogAnn;
+import com.fly.util.aop.Log;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ public class ModuleService {
     @Autowired
     private SystemModuleMapper moduleMapper;
 
-    @SystemLogAnnotation(describe = SystemLogProperties.MODULE_ROLES_USER)
+    @LogAnn(describe = Log.MODULE_ROLES_USER)
     public List<SystemModule> queryModuleTree(Integer[] roles) {
         return moduleMapper.queryModuleTreeByRoleID(roles);
     }

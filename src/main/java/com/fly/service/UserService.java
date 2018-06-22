@@ -5,8 +5,8 @@ import com.fly.dao.SystemUserMapper;
 import com.fly.pojo.SystemRole;
 import com.fly.pojo.SystemUser;
 import com.fly.util.Page;
-import com.fly.util.aop.SystemLogAnnotation;
-import com.fly.util.aop.SystemLogProperties;
+import com.fly.util.aop.LogAnn;
+import com.fly.util.aop.Log;
 import com.fly.util.system.IpUtils;
 import com.fly.util.system.PasswordEncoder;
 import com.github.pagehelper.PageHelper;
@@ -18,6 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author fly
+ */
 @Service
 public class UserService {
 
@@ -27,26 +30,26 @@ public class UserService {
     @Autowired
     private SystemRoleMapper systemRoleMapper;
 
-    @SystemLogAnnotation(describe = SystemLogProperties.USER_LOGIN)
+    @LogAnn(describe = Log.USER_LOGIN)
     public SystemUser loginUser(String name, String pass) {
 
-        PasswordEncoder passwordEncoder = new PasswordEncoder("tom","MD5");
-        pass = passwordEncoder.encode(pass,5);
+        PasswordEncoder passwordEncoder = new PasswordEncoder("tom", "MD5");
+        pass = passwordEncoder.encode(pass, 5);
         return systemUserMapper.selectByNameAndPass(name, pass);
     }
 
-    @SystemLogAnnotation(describe = SystemLogProperties.USER_PERMISSION_ALL)
+    @LogAnn(describe = Log.USER_PERMISSION_ALL)
     public List<String> getUserPermissionByUserId(Integer userid) {
 
         return systemUserMapper.getPermissionByUserId(userid);
     }
 
-    @SystemLogAnnotation(describe = SystemLogProperties.USER_ROLES_ALL)
+    @LogAnn(describe = Log.USER_ROLES_ALL)
     public List<SystemRole> getUserRolesByUserId(Integer userid) {
         return systemUserMapper.getUserRolesByUserId(userid);
     }
 
-    @SystemLogAnnotation(describe = SystemLogProperties.USER_ROLES_ID_ALL)
+    @LogAnn(describe = Log.USER_ROLES_ID_ALL)
     public List<Integer> getUserRolesIDByUserId(Integer userid) {
         return systemUserMapper.getUserRolesIDByUserId(userid);
     }
@@ -70,8 +73,9 @@ public class UserService {
 
         if (systemRoles != null) {
             for (SystemRole s : systemRoles) {
-                if (s.getUserId() == null)
+                if (s.getUserId() == null) {
                     s.setUserId(Integer.MIN_VALUE);
+                }
             }
         }
 
@@ -102,8 +106,8 @@ public class UserService {
     public Page insertUser(SystemUser systemUser) {
 
         String pass = systemUser.getUserpassword();
-        PasswordEncoder passwordEncoder = new PasswordEncoder("tom","MD5");
-        pass = passwordEncoder.encode(pass,5);
+        PasswordEncoder passwordEncoder = new PasswordEncoder("tom", "MD5");
+        pass = passwordEncoder.encode(pass, 5);
         systemUser.setUserpassword(pass);
         System.out.println(pass);
         int count = systemUserMapper.insertSelective(systemUser);
@@ -136,6 +140,15 @@ public class UserService {
         systemUser.setUserlastloginip(IpUtils.getRemoteHost(request));
         systemUser.setUserlastlogintime(new Date());
         systemUserMapper.updateByPrimaryKeySelective(systemUser);
+
+    }
+
+    public Page queryUserRoleByConsultant(Integer page, Integer limit) {
+
+        PageHelper.startPage(page,limit);
+        List<SystemUser> list = systemUserMapper.queryUserRoleByConsultant("咨询师");
+        PageInfo pageInfo = new PageInfo(list);
+        return new Page(pageInfo);
 
     }
 }

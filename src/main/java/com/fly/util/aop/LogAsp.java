@@ -5,13 +5,9 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 
 @Component
@@ -19,16 +15,11 @@ import java.lang.reflect.Method;
 @Order(1)
 public class LogAsp {
 
-//    @Autowired
-//    private LogMessageMapper logMessageMapper;
-
-    @Around("@annotation(com.fly.util.aop.SystemLogAnnotation)")
+    @Around("@annotation(com.fly.util.aop.LogAnn)")
     public Object logAround(ProceedingJoinPoint joinPoint) throws ClassNotFoundException {
 
         Object object = null;
-//        HttpServletRequest request =
-//                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-//        System.out.println(request.getSession().getAttribute("rules"));
+
         String msg = getServiceMethodDescription(joinPoint);
         String params = getServiceMethodParams(joinPoint);
 
@@ -63,7 +54,7 @@ public class LogAsp {
             if(m.getName().equals(methodName)){
                 Class[] classes = m.getParameterTypes();
                 if (classes.length == params.length){
-                    description = m.getAnnotation(SystemLogAnnotation.class).describe();
+                    description = m.getAnnotation(LogAnn.class).describe();
                 }
             }
 

@@ -55,18 +55,38 @@
     </bean>
 
 
-    <!--配置数据源-->
-    <bean id="comboPooledDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-        <property name="driverClass" value="${jdbc.driverClass}"/>
-        <property name="jdbcUrl" value="${jdbc.jdbcUrl}"/>
-        <property name="user" value="${jdbc.user_name}"/>
-        <property name="password" value="${jdbc.password}"/>
+    <!--配置mysql数据源-->
+    <bean id="mysqlDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="driverClass" value="${jdbc.mysql.driverClass}"/>
+        <property name="jdbcUrl" value="${jdbc.mysql.jdbcUrl}"/>
+        <property name="user" value="${jdbc.mysql.user_name}"/>
+        <property name="password" value="${jdbc.mysql.password}"/>
     </bean>
+
+    <!--配置oracle数据源-->
+    <bean id="oracleDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="driverClass" value="${jdbc.oracle.driverClass}"/>
+        <property name="jdbcUrl" value="${jdbc.oracle.jdbcUrl}"/>
+        <property name="user" value="${jdbc.oracle.user_name}"/>
+        <property name="password" value="${jdbc.oracle.password}"/>
+    </bean>
+
+    <!--数据源统一管理,并且为每一个数据源命名-->
+    <bean id="dateSourceUtils" class="com.fly.util.data.DateSourceUtils">
+        <property name="defaultTargetDataSource" ref="mysqlDataSource"/>
+        <property name="targetDataSources">
+            <map>
+                <entry key="mysql" value-ref="mysqlDataSource"/>
+                <entry key="oracle" value-ref="oracleDataSource"/>
+            </map>
+        </property>
+    </bean>
+
 
     <!--配置mybatis-->
 
-    <bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactory">
-        <property name="dataSource" ref="comboPooledDataSource"/>
+    <bean  id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dateSourceUtils"/>
         <property name="configLocation" value="classpath:mybatis_config.xml"/>
         <property name="mapperLocations" value="classpath:mapper/*.xml"/>
     </bean>
@@ -78,7 +98,7 @@
 
     <!--事务管理-->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="comboPooledDataSource"/>
+        <property name="dataSource" ref="mysqlDataSource"/>
     </bean>
 
 

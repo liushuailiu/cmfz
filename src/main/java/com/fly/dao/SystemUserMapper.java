@@ -38,5 +38,11 @@ public interface SystemUserMapper {
 
     Integer updateUserType(@Param("user") Integer user);
 
+    /**
+     * 查询所有拥有咨询师角色的用户
+     * @return list
+     * @param name 咨询师
+     */
+    List<SystemUser> queryUserRoleByConsultant(@Param("name")String name);
 
 }

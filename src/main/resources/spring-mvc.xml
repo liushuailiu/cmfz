@@ -13,9 +13,10 @@
     <mvc:default-servlet-handler/>
 
     <!-- 配置SpringMVC的视图解析器 -->
-    <!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
-        <!--<property name="suffix" value=".html"/>-->
-    <!--</bean>-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
 
     <!--返回JSON数据-->
     <mvc:annotation-driven>

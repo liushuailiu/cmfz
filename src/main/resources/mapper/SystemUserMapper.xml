@@ -217,6 +217,11 @@
             (select roleId from userroletb where userId = #{userid})
   </select>
 
+    <select id="queryUserRoleByConsultant" resultMap="BaseResultMap" parameterType="java.lang.String">
+          select * from usertb u inner join userroletb r on u.userId = r.userId
+          inner join roletb b on r.roleId = b.roleId where b.roleName = #{name}
+    </select>
+
     <update id="updateUserWrongCount" parameterType="java.lang.String">
         update usertb set userPassWrongCout = userPassWrongCout + 1 where userName = #{name}
     </update>
@@ -229,7 +234,7 @@
         update usertb set userPassWrongCout = 0 where userId = #{user}
     </update>
 
-    <update id="updateUserType" parameterType="java.lang.Integer">
+    <update id="updateUserType" parameterType="java.lang.Integer" >
         update usertb set userIsLockout = false where userId = #{user}
     </update>
 

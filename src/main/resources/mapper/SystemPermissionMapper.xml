@@ -118,7 +118,6 @@
 
         </foreach>
 
-
     </insert>
 
     <select id="selectPermission" resultMap="BaseResultMap">
@@ -157,25 +156,17 @@
   </select>
 
     <insert id="insertRoleGetPermission">
-    insert into rolepermissiontb (roleId, permissionId) values (#{role},#{pId})
-  </insert>
+          insert into rolepermissiontb (roleId, permissionId) values (#{role},#{pId})
+    </insert>
+
+    <insert id="batchInsertRolePermissionNew" parameterType="com.fly.pojo.SystemPermission" statementType="CALLABLE">
+            call insert_role_permission(#{permissionvalue},#{permissionmodule},#{permissionname},1)
+    </insert>
+
 
     <delete id="insertRoleLostPermission">
-    delete from rolepermissiontb where roleId = #{role} and permissionId = #{pId}
-  </delete>
+        delete from rolepermissiontb where roleId = #{role} and permissionId = #{pId}
+    </delete>
+
 
 </mapper>
-
-        <!--<where>-->
-
-        <!--<if test=" module_id != null ">-->
-        <!--p.permissionId = #{module_id}-->
-        <!--</if>-->
-        <!--<if test=" module_name != null ">-->
-        <!--and p.permissionModule = #{module_name}-->
-        <!--</if>-->
-        <!--<if test=" permission_name != null ">-->
-        <!--and p.permissionName = #{permission_name}-->
-        <!--</if>-->
-
-        <!--</where>-->

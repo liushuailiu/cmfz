@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
+
+import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 @RestController
@@ -46,8 +48,6 @@ public class PermissionController {
     public Page updateRoleGetPermission(Integer Role, Integer pId){
         return systemPermissionService.updateRoleGetPermission(Role,pId);
     }
-
-//    lost
 
     @PostMapping(value = "/lost",name = "回收角色权限")
     public Page updateRoleLostPermission(Integer Role, Integer pId){
@@ -117,7 +117,9 @@ public class PermissionController {
             }
         }
 
-        return permissiontbs.size()>0?systemPermissionService.updateSystemPermission(permissiontbs):0;
+//        return permissiontbs.size()>0?systemPermissionService.updateSystemPermission(permissiontbs):0;
+        return permissiontbs.size()>0?systemPermissionService.updateSystemPermissionNew(permissiontbs):0;
+
 
     }
 
