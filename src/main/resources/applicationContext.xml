@@ -42,6 +42,13 @@
         <property name="password" value="${redis.pass}" />
         <property name="timeout" value="${redis.timeout}" />
     </bean>
+
+    <bean id="redisCacheTransfer" class="com.fly.util.cache.RedisCacheTransfer">
+        <property name="jedisConnectionFactory" ref="connectionFactory"/>
+    </bean>
+
+
+
     <!-- redis操作模板，面向对象的模板 -->
     <bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
         <property name="connectionFactory" ref="connectionFactory" />
