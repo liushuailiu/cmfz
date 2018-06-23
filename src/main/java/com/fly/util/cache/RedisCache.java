@@ -25,7 +25,6 @@ public class RedisCache implements Cache {
      */
     private final static ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
 
-    @Autowired
     private static JedisConnectionFactory jedisConnectionFactory;
 
     public RedisCache(final String id) {

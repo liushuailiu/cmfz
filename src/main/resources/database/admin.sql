@@ -317,5 +317,10 @@ CREATE TABLE `spring_students` (
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
+ alter table tb_products
+ add constraint fk_products_supplier
+ foreign key (supplier_id,supplier_name)
+ references tb_supplier(supplier_id,supplier_name);
+ constraint fk_products_supplier foreign key (supplier_id,supplier_name) references tb_supplier(supplier_id);
 
 

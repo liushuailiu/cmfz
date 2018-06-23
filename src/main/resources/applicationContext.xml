@@ -43,6 +43,7 @@
         <property name="timeout" value="${redis.timeout}" />
     </bean>
 
+    <!--注入到自定义缓存-->
     <bean id="redisCacheTransfer" class="com.fly.util.cache.RedisCacheTransfer">
         <property name="jedisConnectionFactory" ref="connectionFactory"/>
     </bean>
@@ -81,6 +82,7 @@
 
     <!--数据源统一管理,并且为每一个数据源命名-->
     <bean id="dateSourceUtils" class="com.fly.util.data.DateSourceUtils">
+
         <property name="defaultTargetDataSource" ref="mysqlDataSource"/>
         <property name="targetDataSources">
             <map>
@@ -109,10 +111,46 @@
         <property name="basePackage" value="com.fly.dao"/>
     </bean>
 
-    <!--事务管理-->
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <!--mysql事务管理-->
+    <bean id="mySql_transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="mysqlDataSource"/>
     </bean>
+
+    <!--oracle事务管理-->
+    <bean id="oracle_transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="oracleDataSource"/>
+    </bean>
+
+    <aop:config>
+        <aop:pointcut id="mysql_txPoint" expression="execution(* com.fly.service.mysql..*(..))"/>
+        <aop:advisor advice-ref="mysql_txAdvice" pointcut-ref="mysql_txPoint" order="30"/>
+    </aop:config>
+
+    <aop:config>
+        <aop:pointcut id="oracle_txPoint" expression="execution(* com.fly.service.oracle..*(..))"/>
+        <aop:advisor advice-ref="oracle_txAdvice" pointcut-ref="oracle_txPoint" order="30"/>
+    </aop:config>
+
+    <tx:advice id="oracle_txAdvice" transaction-manager="oracle_transactionManager">
+        <tx:attributes>
+            <tx:method name="*"/>
+            <tx:method name="get*" read-only="true"/>
+            <tx:method name="select*" read-only="true"/>
+            <tx:method name="query*" read-only="true"/>
+            <tx:method name="delete*" propagation="REQUIRED"/>
+        </tx:attributes>
+    </tx:advice>
+
+
+    <tx:advice id="mysql_txAdvice" transaction-manager="mySql_transactionManager">
+        <tx:attributes>
+            <tx:method name="*"/>
+            <tx:method name="get*" read-only="true"/>
+            <tx:method name="select*" read-only="true"/>
+            <tx:method name="query*" read-only="true"/>
+            <tx:method name="delete*" propagation="REQUIRED"/>
+        </tx:attributes>
+    </tx:advice>
 
 
     <!--开启文件上传-->
@@ -156,22 +194,6 @@
         <!--</property>-->
 
     <!--</bean>-->
-
-
-    <aop:config>
-        <aop:pointcut id="txPoint" expression="execution(* com.fly.service..*(..))"/>
-        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPoint" order="30"/>
-    </aop:config>
-
-    <tx:advice id="txAdvice">
-        <tx:attributes>
-            <tx:method name="*"/>
-            <tx:method name="get*" read-only="true"/>
-            <tx:method name="select*" read-only="true"/>
-            <tx:method name="query*" read-only="true"/>
-            <tx:method name="delete*" propagation="REQUIRED"/>
-        </tx:attributes>
-    </tx:advice>
 
 
 </beans>

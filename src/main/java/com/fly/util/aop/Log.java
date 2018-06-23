@@ -8,7 +8,5 @@ public class Log {
     public static final String USER_ROLES_ALL = "获取用户所有角色";
     public static final String USER_ROLES_ID_ALL = "获取用户所有角色ID";
     public static final String MODULE_ROLES_USER = "获取用户对应角色的所有的模块";
-    public static final String ORACLE = "oracle";
-    public static final String MYSQL = "mysql";
 
 }
