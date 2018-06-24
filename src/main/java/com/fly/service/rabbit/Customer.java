@@ -3,7 +3,6 @@ package com.fly.service.rabbit;
 import com.fly.view.WebSocketServer;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageListener;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
