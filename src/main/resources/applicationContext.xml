@@ -2,9 +2,9 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:aop="http://www.springframework.org/schema/aop" 
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:tx="http://www.springframework.org/schema/tx"
-       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:rabbit="http://www.springframework.org/schema/rabbit"
        xsi:schemaLocation="http://www.springframework.org/schema/beans 
        http://www.springframework.org/schema/beans/spring-beans.xsd 
        http://www.springframework.org/schema/context 
@@ -14,7 +14,9 @@
        http://www.springframework.org/schema/tx 
        http://www.springframework.org/schema/tx/spring-tx.xsd 
        http://www.springframework.org/schema/mvc 
-       http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/rabbit
+       http://www.springframework.org/schema/rabbit/spring-rabbit.xsd">
 
     <mvc:annotation-driven/>
     <aop:aspectj-autoproxy proxy-target-class="true"/>
@@ -23,7 +25,6 @@
     </context:component-scan>
 
     <context:property-placeholder location="classpath:jdbc.properties" ignore-unresolvable="true"/>
-    <context:property-placeholder location="classpath:redis.properties" />
 
     <!-- redis 配置 -->
     <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
@@ -32,6 +33,46 @@
          <property name="maxWaitMillis" value="${redis.maxWait}" />
            <property name="testOnBorrow" value="${redis.testOnBorrow}" />
     </bean>
+
+    <!--rabbitMq配置-->
+
+    <rabbit:connection-factory id="rabbitMqConnectionFactory"
+        host="${rabbitMq.url}"
+        username="${rabbitMq.username}"
+        password="${rabbitMq.password}"
+        port="${rabbitMq.port}"
+    />
+
+    <rabbit:admin connection-factory="rabbitMqConnectionFactory"/>
+
+    <!--声明mq模板,定义消息生产者-->
+
+    <rabbit:template id="amqpTemplate"
+                     exchange="mq_exchange"
+                     connection-factory="rabbitMqConnectionFactory"
+                     message-converter="jsonMessageConverter"
+    />
+
+    <bean id="jsonMessageConverter" class="com.fly.service.rabbit.GsonJsonMessageConverter"/>
+
+    <!--声明队列-->
+    <rabbit:queue name="message_queue" durable="true" auto-delete="false" exclusive="false"/>
+
+    <!--注册交换机-->
+    <rabbit:topic-exchange name="mq_exchange" durable="true" auto-delete="false">
+        <rabbit:bindings>
+            <rabbit:binding queue="message_queue" pattern="mq_url"></rabbit:binding>
+        </rabbit:bindings>
+    </rabbit:topic-exchange>
+
+    <!--配置消费者-->
+    <bean id="messageCustomer" class="com.fly.service.rabbit.Customer"/>
+
+    <!--配置监听 监听队列中是否有新的消息-->
+    <rabbit:listener-container connection-factory="rabbitMqConnectionFactory" acknowledge="auto">
+        <rabbit:listener ref="messageCustomer" queues="message_queue" method="onMessage"/>
+    </rabbit:listener-container>
+
 
     <!-- redis服务器中心 -->
     <bean id="connectionFactory"
@@ -65,7 +106,7 @@
 
 
     <!--配置mysql数据源-->
-    <bean id="mysqlDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+    <bean id="mysqlDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="driverClass" value="${jdbc.mysql.driverClass}"/>
         <property name="jdbcUrl" value="${jdbc.mysql.jdbcUrl}"/>
         <property name="user" value="${jdbc.mysql.user_name}"/>
@@ -73,7 +114,7 @@
     </bean>
 
     <!--配置oracle数据源-->
-    <bean id="oracleDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+    <bean id="oracleDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="driverClass" value="${jdbc.oracle.driverClass}"/>
         <property name="jdbcUrl" value="${jdbc.oracle.jdbcUrl}"/>
         <property name="user" value="${jdbc.oracle.user_name}"/>
