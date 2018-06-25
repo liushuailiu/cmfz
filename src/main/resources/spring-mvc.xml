@@ -7,7 +7,9 @@
 
     <context:annotation-config />
 
-    <context:component-scan base-package="com.fly.view"/>
+    <context:component-scan base-package="com.fly.view" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+    </context:component-scan>
 
     <!--将mvc无法处理的请求交给tomcat-->
     <mvc:default-servlet-handler/>

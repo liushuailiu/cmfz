@@ -5,6 +5,7 @@
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xmlns:task="http://www.springframework.org/schema/task"
        xsi:schemaLocation="http://www.springframework.org/schema/beans 
        http://www.springframework.org/schema/beans/spring-beans.xsd 
        http://www.springframework.org/schema/context 
@@ -16,7 +17,9 @@
        http://www.springframework.org/schema/mvc 
        http://www.springframework.org/schema/mvc/spring-mvc.xsd
        http://www.springframework.org/schema/rabbit
-       http://www.springframework.org/schema/rabbit/spring-rabbit.xsd">
+       http://www.springframework.org/schema/rabbit/spring-rabbit.xsd
+       http://www.springframework.org/schema/task
+       http://www.springframework.org/schema/task/spring-task.xsd">
 
     <mvc:annotation-driven/>
     <aop:aspectj-autoproxy proxy-target-class="true"/>
@@ -24,23 +27,25 @@
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
+    <task:annotation-driven />
+
     <context:property-placeholder location="classpath:jdbc.properties" ignore-unresolvable="true"/>
 
     <!-- redis 配置 -->
     <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
-         <property name="maxIdle" value="${redis.maxIdle}" />
-          <property name="minIdle" value="${redis.minIdle}" />
-         <property name="maxWaitMillis" value="${redis.maxWait}" />
-           <property name="testOnBorrow" value="${redis.testOnBorrow}" />
+        <property name="maxIdle" value="${redis.maxIdle}"/>
+        <property name="minIdle" value="${redis.minIdle}"/>
+        <property name="maxWaitMillis" value="${redis.maxWait}"/>
+        <property name="testOnBorrow" value="${redis.testOnBorrow}"/>
     </bean>
 
     <!--rabbitMq配置-->
 
     <rabbit:connection-factory id="rabbitMqConnectionFactory"
-        host="${rabbitMq.url}"
-        username="${rabbitMq.username}"
-        password="${rabbitMq.password}"
-        port="${rabbitMq.port}"
+                               host="${rabbitMq.url}"
+                               username="${rabbitMq.username}"
+                               password="${rabbitMq.password}"
+                               port="${rabbitMq.port}"
     />
 
     <rabbit:admin connection-factory="rabbitMqConnectionFactory"/>
@@ -69,19 +74,25 @@
     <bean id="messageCustomer" class="com.fly.service.rabbit.Customer"/>
 
     <!--配置监听 监听队列中是否有新的消息-->
-    <rabbit:listener-container connection-factory="rabbitMqConnectionFactory" acknowledge="auto">
-        <rabbit:listener ref="messageCustomer" queues="message_queue" method="onMessage"/>
+    <rabbit:listener-container connection-factory="rabbitMqConnectionFactory"
+                               message-converter="jsonMessageConverter"
+                               acknowledge="auto">
+        <rabbit:listener
+                ref="messageCustomer"
+                queues="message_queue"
+                method="onMessage"
+        />
     </rabbit:listener-container>
 
 
     <!-- redis服务器中心 -->
     <bean id="connectionFactory"
           class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
-        <property name="poolConfig" ref="poolConfig" />
-        <property name="port" value="${redis.port}" />
-        <property name="hostName" value="${redis.host}" />
-        <property name="password" value="${redis.pass}" />
-        <property name="timeout" value="${redis.timeout}" />
+        <property name="poolConfig" ref="poolConfig"/>
+        <property name="port" value="${redis.port}"/>
+        <property name="hostName" value="${redis.host}"/>
+        <property name="password" value="${redis.pass}"/>
+        <property name="timeout" value="${redis.timeout}"/>
     </bean>
 
     <!--注入到自定义缓存-->
@@ -90,19 +101,17 @@
     </bean>
 
 
-
     <!-- redis操作模板，面向对象的模板 -->
     <bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
-        <property name="connectionFactory" ref="connectionFactory" />
+        <property name="connectionFactory" ref="connectionFactory"/>
         <!-- 如果不配置Serializer，那么存储的时候只能使用String，如果用对象类型存储，那么会提示错误 -->
         <property name="keySerializer">
-            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
         </property>
         <property name="valueSerializer">
-            <bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer" />
+            <bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>
         </property>
     </bean>
-
 
 
     <!--配置mysql数据源-->
@@ -136,7 +145,7 @@
 
     <!--配置mybatis-->
 
-    <bean  id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dateSourceUtils"/>
         <property name="configLocation" value="classpath:mybatis_config.xml"/>
         <property name="mapperLocations">
@@ -227,12 +236,12 @@
 
     <!--<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">-->
 
-        <!--<property name="exceptionMappings">-->
-            <!--<props>-->
-                <!--<prop key="java.lang.Exception">redirect:/404.html</prop>-->
-                <!--<prop key="com.fly.util.exception.NoPermissionException">redirect:/login.html</prop>-->
-            <!--</props>-->
-        <!--</property>-->
+    <!--<property name="exceptionMappings">-->
+    <!--<props>-->
+    <!--<prop key="java.lang.Exception">redirect:/404.html</prop>-->
+    <!--<prop key="com.fly.util.exception.NoPermissionException">redirect:/login.html</prop>-->
+    <!--</props>-->
+    <!--</property>-->
 
     <!--</bean>-->
 

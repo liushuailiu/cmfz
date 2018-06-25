@@ -10,7 +10,6 @@
     <link rel="stylesheet" type="text/css" href="js/easyui/demo/demo.css">
     <link rel="stylesheet" type="text/css" href="js/zTree/css/zTreeStyle/zTreeStyle.css"/>
     <link rel="stylesheet" type="text/css" href="js/zTree/css/demo.css"/>
-    <script type="text/javascript" src="js/webSocket.js"></script>
     <script type="text/javascript" src="js/easyui/jquery.min.js"></script>
     <script type="text/javascript" src="js/easyui/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="js/crm.js"></script>
@@ -62,6 +61,27 @@
 </body>
 
 <SCRIPT LANGUAGE="JavaScript">
+
+    $(function () {
+        // 获取服务器最新消息类
+        var webSocket = null;
+        if(window.WebSocket){
+            webSocket = new WebSocket("ws://127.0.0.1:8080/webSocket/1");
+        }
+        webSocket.onmessage = function (event) {
+            layui.use('layer', function(){
+                var $ = layui.jquery, layer = layui.layer;
+                layer.open({
+                    title: '系统通知'
+                    ,content: event.data
+                    ,btn:['确定']
+                });
+            });
+        };
+    });
+
+
+
 
     //获取用户负责模块,生成导航栏
     $(function () {

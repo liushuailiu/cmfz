@@ -129,6 +129,7 @@ public class LoginController {
     public Object confirm(String name,String pass,HttpServletRequest request){
 
         SystemUser systemUser = userService.loginUser(name,pass);
+
         if(systemUser==null){
             userService.updateUserWrongCount(name);
             return new SystemResult("用户名或密码错误",1);
