@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 
 /**
@@ -21,6 +22,13 @@ import java.util.List;
 @Configuration
 @EnableAsync
 public class TestController {
+
+    public static CopyOnWriteArraySet<TestController> controller =  new CopyOnWriteArraySet<TestController>();
+    public ThreadLocal<Boolean> threadLocal = new ThreadLocal<Boolean>();
+
+    public void setResult(Boolean b){
+        this.threadLocal.set(b);
+    }
 
     @Autowired
     private EmpService empService;
@@ -39,5 +47,7 @@ public class TestController {
         producer.testVerification();
         producer.testPhone();
     }
+
+    
 
 }

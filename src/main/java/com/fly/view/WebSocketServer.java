@@ -44,7 +44,6 @@ public class WebSocketServer {
      * 发消息
      * @param message
      */
-
     @OnMessage
     public void onMessage(String message){
         for (WebSocketServer item : webSocketServers){

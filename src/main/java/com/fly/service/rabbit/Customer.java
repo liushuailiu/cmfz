@@ -1,6 +1,9 @@
 package com.fly.service.rabbit;
 
+import com.fly.view.SocketController;
+import com.fly.view.TestController;
 import com.fly.view.WebSocketServer;
+import org.aspectj.weaver.ast.Test;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageListener;
 import org.springframework.stereotype.Service;
@@ -17,40 +20,17 @@ import java.util.List;
 @Service("messageCustomer")
 public class Customer implements MessageListener {
 
-    private List<Boolean> list = new ArrayList<>();
-    private static final Integer size = 3;
-    private static Boolean type = true;
-
     @Override
     public void onMessage(Message message) {
 
-        try {
-            boolean flag = Boolean.valueOf(new String(message.getBody(),"UTF-8"));
-            list.add(flag);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-        if(list.size()==size){
-            for (Boolean b : list) {
-                if(!b){
-                    type = false;
-                    continue;
-                }
+        for (SocketController s : SocketController.controllers){
+            try {
+                s.onSendMessage("123");
+            } catch (IOException e) {
+                continue;
             }
-            list.clear();
-            System.out.println(type);
         }
 
     }
 
-
-//            for (WebSocketServer webSocketServer : WebSocketServer.webSocketServers){
-//        try {
-//            webSocketServer.sendMessage(new String(message.getBody(),"UTF-8"));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            continue;
-//        }
-//    }
 }
