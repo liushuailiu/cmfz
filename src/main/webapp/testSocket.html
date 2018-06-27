@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="js/easyui/jquery.min.js"></script>
+</head>
+<script>
+    var webSocket;
+    $(function () {
+        webSocket = new WebSocket("ws://192.168.1.46:8080/soc");
+        webSocket.onmessage = function (event) {
+            alert(JSON.stringify(event.data));
+        }
+    });
+    function send() {
+       webSocket.send($("#inp_1").val());
+    };
+    window.onunload = function () {
+        webSocket.onclose();
+    };
+    window.onbeforeunload = function () {
+        webSocket.onclose();
+    }
+</script>
+
+<input type="text" id="inp_1"><input type="button" onclick="send()" value="TEST">
+
+<body>
+
+
+
+</body>
+</html>

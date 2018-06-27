@@ -14,7 +14,6 @@ public class DateSourceUtils extends AbstractRoutingDataSource {
             new InheritableThreadLocal<String>();
 
     public static void setDataSourceKey(TYPE type){
-        System.out.println("-------------->" + type.getType());
         dataSourceKey.set(type.getType());
     }
 

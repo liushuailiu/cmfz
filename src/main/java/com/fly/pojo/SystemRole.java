@@ -1,8 +1,9 @@
 package com.fly.pojo;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class SystemRole {
+public class SystemRole  implements Serializable {
 
     private Integer roleid;
 

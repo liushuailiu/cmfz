@@ -1,5 +1,6 @@
 package com.fly.view;
 
+import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
@@ -22,6 +23,12 @@ public class SocketController {
     public void onOpen(Session session){
         this.session = session;
         controllers.add(this);
+    }
+
+    @OnClose
+    public void onClose() {
+        controllers.remove(this);
+        System.out.println("删除链接");
     }
 
     @OnMessage

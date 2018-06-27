@@ -9,9 +9,6 @@ import org.springframework.amqp.core.MessageListener;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author fly
@@ -25,7 +22,7 @@ public class Customer implements MessageListener {
 
         for (SocketController s : SocketController.controllers){
             try {
-                s.onSendMessage("123");
+                s.onSendMessage(new String(message.getBody(),"UTF-8"));
             } catch (IOException e) {
                 continue;
             }

@@ -40,13 +40,6 @@
 		</div>
 		<script>
 
-			$(function () {
-				var ws = new WebSocket("ws://192.168.1.46:8080/soc");
-				ws.onmessage = function (event) {
-					alert(JSON.stringify(event.data));
-                }
-            });
-
 			function submitForm() {
 
 				if($("#ff").form("validate")) {

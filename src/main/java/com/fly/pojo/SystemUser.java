@@ -1,8 +1,9 @@
 package com.fly.pojo;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class SystemUser {
+public class SystemUser implements Serializable {
     private Integer userid;
 
     private String username;
